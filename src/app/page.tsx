@@ -13,8 +13,8 @@ export default function Home() {
   const copy = pt;
 
   return (
-    <ClickSpark sparkColor="#d4a017" sparkCount={10} sparkRadius={18} duration={450}>
-      <div className="relative min-h-screen bg-background">
+    <ClickSpark sparkColor="#f5f5f0" sparkCount={8} sparkRadius={16} duration={400}>
+      <div className="relative min-h-screen bg-background text-foreground">
         <SiteHeader copy={copy} />
         <main className="relative">
           <Hero copy={copy} />
@@ -23,12 +23,10 @@ export default function Home() {
           <Experience copy={copy} />
           <Contact copy={copy} />
         </main>
-        <footer className="border-t border-border px-6 py-8 md:px-10">
-          <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 text-sm text-muted-foreground sm:flex-row sm:items-center">
+        <footer className="border-t border-foreground/15 px-6 py-8 md:px-10">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 text-sm text-muted-foreground">
             <p className="font-display text-foreground">{copy.footer.legal}</p>
-            <p className="text-[0.7rem] uppercase tracking-[0.18em]">
-              Portfólio · {new Date().getFullYear()}
-            </p>
+            <p className="font-mono text-[0.65rem]">© {new Date().getFullYear()}</p>
           </div>
         </footer>
       </div>

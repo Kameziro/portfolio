@@ -28,12 +28,14 @@ export const pt = {
     items: [
       {
         name: "AOR",
+        line: "Offline-first",
         summary:
           "App em React Native com arquitetura offline-first para entrevistas de agentes de orientação rural em áreas remotas.",
         stack: "React Native · JavaScript · Offline-first",
       },
       {
         name: "MSQualifica",
+        line: "Mercado de trabalho",
         summary:
           "Sistema web para o Governo do Mato Grosso do Sul, conectando cidadãos a oportunidades no mercado de trabalho.",
         stack: "Next.js · Node.js · Java · Quarkus · SQL Server",

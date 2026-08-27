@@ -2,19 +2,15 @@
 
 import { useState, type FormEvent } from "react";
 import FadeContent from "@/components/FadeContent";
-import Magnet from "@/components/Magnet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
 
-const underlineField =
-  "h-12 rounded-none !border-0 !border-b-2 !border-foreground/55 bg-transparent !px-0 shadow-none outline-none !ring-0 focus-visible:!border-primary focus-visible:!ring-0 dark:!bg-transparent dark:focus-visible:!ring-0";
-
+/**
+ * Mobbin → Studio Freight Inquire
+ * https://mobbin.com/sites/sections/4496ab63-aada-4e07-933b-c32a13e535b5
+ * Black canvas, white serif, underline fields, text Submit, Links column.
+ */
 export function Contact({ copy }: Props) {
   const [submitted, setSubmitted] = useState(false);
 
@@ -23,136 +19,102 @@ export function Contact({ copy }: Props) {
     setSubmitted(true);
   }
 
-  const softLinks = [
-    { href: `mailto:${copy.contact.email}`, label: copy.contact.email, external: false },
-    {
-      href: copy.contact.linkedin,
-      label: copy.contact.linkedinLabel,
-      external: true,
-    },
-    {
-      href: copy.contact.pdfHref,
-      label: copy.contact.pdfLabel,
-      external: false,
-      download: true,
-    },
-  ];
-
   return (
     <section
       id="contato"
       aria-labelledby="contato-title"
-      className="mx-auto max-w-6xl border-t border-border px-6 py-28 md:px-10 md:py-36"
+      className="mx-auto max-w-6xl border-t border-foreground/15 px-6 py-28 md:px-10 md:py-36"
     >
-      <div className="grid gap-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-20">
+      <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
         <FadeContent duration={850}>
-          <p className="text-[0.7rem] uppercase tracking-[0.24em] text-primary">
+          <h2 id="contato-title" className="sf-label text-lg">
             {copy.contact.title}
-          </p>
-          <h2
-            id="contato-title"
-            className="mt-5 max-w-md font-display text-3xl leading-tight tracking-tight text-foreground md:text-4xl"
-          >
-            {copy.contact.lead}
           </h2>
+          <p className="mt-4 max-w-sm font-display text-xl leading-snug text-foreground md:text-2xl">
+            {copy.contact.lead}
+          </p>
 
-          <dl className="mt-12 space-y-0 border-t border-border">
-            {softLinks.map((link) => (
-              <div
-                key={link.href}
-                className="flex items-baseline justify-between gap-6 border-b border-border py-5"
-              >
-                <dt className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
-                  {link.download
-                    ? "CV"
-                    : link.href.startsWith("mailto:")
-                      ? "E-mail"
-                      : "Social"}
-                </dt>
-                <dd className="text-right">
-                  <a
-                    href={link.href}
-                    {...(link.external
-                      ? { target: "_blank", rel: "noreferrer" }
-                      : {})}
-                    {...(link.download ? { download: true } : {})}
-                    className="text-sm text-foreground transition-colors hover:text-primary md:text-base"
-                  >
-                    {link.label}
-                    <span aria-hidden className="ml-1 inline-block text-muted-foreground">
-                      ↗
-                    </span>
-                  </a>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </FadeContent>
+          <form onSubmit={onSubmit} className="mt-12 space-y-0" noValidate>
+            <p className="mb-8 text-sm text-muted-foreground">{copy.contact.form.note}</p>
 
-        <FadeContent duration={900} delay={80}>
-          <p className="mb-8 text-sm text-muted-foreground">{copy.contact.form.note}</p>
-          <form onSubmit={onSubmit} className="space-y-8" noValidate>
-            <div className="space-y-3">
-              <Label
-                htmlFor="name"
-                className="font-display text-base font-normal text-foreground"
-              >
-                {copy.contact.form.name}
-              </Label>
-              <Input
-                id="name"
+            <label className="block border-b border-foreground/40 py-3">
+              <span className="sf-label">{copy.contact.form.name}*</span>
+              <input
                 name="name"
                 autoComplete="name"
-                className={cn(underlineField)}
+                className="sf-field mt-1 border-0"
+                aria-label={copy.contact.form.name}
               />
-            </div>
-            <div className="space-y-3">
-              <Label
-                htmlFor="email"
-                className="font-display text-base font-normal text-foreground"
-              >
-                {copy.contact.form.email}
-              </Label>
-              <Input
-                id="email"
+            </label>
+            <label className="block border-b border-foreground/40 py-3">
+              <span className="sf-label">{copy.contact.form.email}*</span>
+              <input
                 name="email"
                 type="email"
                 autoComplete="email"
-                className={cn(underlineField)}
+                className="sf-field mt-1 border-0"
+                aria-label={copy.contact.form.email}
               />
-            </div>
-            <div className="space-y-3">
-              <Label
-                htmlFor="message"
-                className="font-display text-base font-normal text-foreground"
-              >
-                {copy.contact.form.message}
-              </Label>
-              <Textarea
-                id="message"
+            </label>
+            <label className="block border-b border-foreground/40 py-3">
+              <span className="sf-label">{copy.contact.form.message}*</span>
+              <textarea
                 name="message"
-                rows={4}
-                className={cn(
-                  underlineField,
-                  "min-h-28 resize-y py-3 focus-visible:ring-0",
-                )}
+                rows={3}
+                className="sf-field mt-1 min-h-24 resize-y border-0"
+                aria-label={copy.contact.form.message}
               />
-            </div>
-            <Magnet padding={36} magnetStrength={2.5}>
-              <Button
-                type="submit"
-                size="lg"
-                className="rounded-none px-8 text-[0.8rem] uppercase tracking-[0.14em]"
-              >
-                {copy.contact.form.submit}
-              </Button>
-            </Magnet>
+            </label>
+
+            <button
+              type="submit"
+              className="mt-8 font-display text-base text-foreground underline-offset-4 transition-opacity hover:underline"
+            >
+              {copy.contact.form.submit}
+            </button>
+
             {submitted ? (
-              <p className="text-sm text-muted-foreground" role="status">
-                Formulário só UI por enquanto — use e-mail ou LinkedIn para falar comigo.
+              <p className="mt-4 font-display text-sm text-muted-foreground" role="status">
+                Formulário só UI — use e-mail ou LinkedIn.
               </p>
             ) : null}
           </form>
+        </FadeContent>
+
+        <FadeContent duration={900} delay={80}>
+          <h3 className="sf-label text-lg">Links</h3>
+          <ul className="mt-8 list-none space-y-0 border-t border-foreground/25 p-0">
+            <li className="border-b border-foreground/25">
+              <a
+                href={`mailto:${copy.contact.email}`}
+                className="flex items-center justify-between py-4 font-display text-base text-foreground transition-opacity hover:opacity-70"
+              >
+                <span>E-mail</span>
+                <span className="text-sm text-muted-foreground">{copy.contact.email}</span>
+              </a>
+            </li>
+            <li className="border-b border-foreground/25">
+              <a
+                href={copy.contact.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-between py-4 font-display text-base text-foreground transition-opacity hover:opacity-70"
+              >
+                <span>{copy.contact.linkedinLabel}</span>
+                <span aria-hidden>↗</span>
+              </a>
+            </li>
+            <li className="border-b border-foreground/25">
+              <a
+                href={copy.contact.pdfHref}
+                download
+                className="flex items-center justify-between py-4 font-display text-base text-foreground transition-opacity hover:opacity-70"
+              >
+                <span>{copy.contact.pdfLabel}</span>
+                <span aria-hidden>↓</span>
+              </a>
+            </li>
+          </ul>
         </FadeContent>
       </div>
     </section>
