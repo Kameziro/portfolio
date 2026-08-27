@@ -1,12 +1,9 @@
 "use client";
 
-/**
- * Scroll emerge wrapper — Origin Kit Focus Reveal motion language
- * (blur + scale + fade) applied to block content on scroll into view.
- */
+/** Soft fade/slide on enter — no CSS filter (avoids stuck blur). */
 
-import { motion, useReducedMotion, useInView } from "motion/react";
-import { useRef, type ReactNode } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import type { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
@@ -22,27 +19,16 @@ export default function ScrollEmerge({
   once = true,
 }: Props) {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once, amount: 0.2 });
-  const show = inView || reduce === true;
 
   return (
     <motion.div
-      ref={ref}
       className={className}
-      initial={
-        reduce
-          ? { opacity: 1 }
-          : { opacity: 0, scale: 0.96, filter: "blur(10px)" }
-      }
-      animate={
-        show
-          ? { opacity: 1, scale: 1, filter: "blur(0px)" }
-          : { opacity: 0, scale: 0.96, filter: "blur(10px)" }
-      }
+      initial={reduce ? false : { opacity: 1, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once, amount: 0.15 }}
       transition={{
         type: "tween",
-        duration: reduce ? 0.15 : 0.5,
+        duration: reduce ? 0.01 : 0.45,
         delay: reduce ? 0 : delay,
         ease: [0.215, 0.61, 0.355, 1],
       }}

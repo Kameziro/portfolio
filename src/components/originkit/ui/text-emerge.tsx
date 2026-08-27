@@ -1,23 +1,15 @@
 "use client";
 
 /**
- * Text Emerge — Origin Kit motion pattern (word-by-word scale + blur),
- * adapted from the delivered Focus Reveal source for scroll/section use.
- * Full registry fetch blocked by weekly quota; API matches originkit.dev/text-emerge.
+ * Text Emerge — word stagger on scroll (opacity + y only, no filter).
  */
 
-import {
-  motion,
-  useReducedMotion,
-  useInView,
-  type Transition,
-} from "motion/react";
-import { useMemo, useRef, type CSSProperties, type ElementType } from "react";
+import { motion, useReducedMotion, type Transition } from "motion/react";
+import { useMemo, type CSSProperties, type ElementType } from "react";
 
 type StaggerFrom = "start" | "center" | "end" | "random";
 
 type TransitionValue = {
-  type?: string;
   duration?: number;
   delay?: number;
   ease?: string | number[];
@@ -32,18 +24,16 @@ type TextEmergeProps = {
   id?: string;
   staggerFrom?: StaggerFrom;
   transition?: TransitionValue;
-  /** Animate once when scrolled into view */
   once?: boolean;
 };
 
 const EASE_OUT = [0.215, 0.61, 0.355, 1] as const;
 
 const DEFAULT_TRANSITION: TransitionValue = {
-  type: "tween",
-  duration: 0.45,
+  duration: 0.4,
   delay: 0,
   ease: "easeOut",
-  staggerChildren: 0.06,
+  staggerChildren: 0.05,
 };
 
 const MOTION_TAGS = {
@@ -107,14 +97,7 @@ export default function TextEmerge({
   once = true,
 }: TextEmergeProps) {
   const reduceMotion = useReducedMotion();
-  const ref = useRef<HTMLElement | null>(null);
-  const inView = useInView(ref, { once, amount: 0.25 });
-
-  const words = useMemo(
-    () => text.split(/\s+/).filter(Boolean),
-    [text],
-  );
-
+  const words = useMemo(() => text.split(/\s+/).filter(Boolean), [text]);
   const duration = transition.duration ?? DEFAULT_TRANSITION.duration!;
   const baseDelay = transition.delay ?? DEFAULT_TRANSITION.delay!;
   const staggerEach =
@@ -132,11 +115,9 @@ export default function TextEmerge({
   );
 
   const MotionTag = MOTION_TAGS[Tag];
-  const show = inView || skip;
 
   return (
     <MotionTag
-      ref={ref as never}
       id={id}
       className={className}
       style={{ margin: 0, ...(color ? { color } : null) } satisfies CSSProperties}
@@ -145,21 +126,14 @@ export default function TextEmerge({
       {words.map((word, index) => (
         <motion.span
           key={`${word}-${index}`}
-          className="mr-[0.3em] inline-block will-change-[transform,opacity,filter] last:mr-0"
+          className="mr-[0.3em] inline-block last:mr-0"
           aria-hidden
-          initial={
-            skip
-              ? { opacity: 1 }
-              : { opacity: 0, scale: 0.86, filter: "blur(12px)" }
-          }
-          animate={
-            show
-              ? { opacity: 1, scale: 1, filter: "blur(0px)" }
-              : { opacity: 0, scale: 0.86, filter: "blur(12px)" }
-          }
+          initial={skip ? false : { opacity: 1, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once, amount: 0.2 }}
           transition={{
             type: "tween",
-            duration: skip ? 0.15 : duration,
+            duration: skip ? 0.01 : duration,
             delay: delays[index] ?? 0,
             ease: resolveEase(transition.ease),
           }}

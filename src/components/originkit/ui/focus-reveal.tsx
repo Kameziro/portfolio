@@ -1,19 +1,11 @@
 "use client";
 
-// Focus Reveal — Originkit (motion/react)
-// Props set in the preview:
-//   text: "FOCUS REVEAL"
-//   blur: 20
-//   staggerFrom: "start"
-//
-// Typography: prefer `className` (Tailwind). Inline `font` / `color` are
-// optional overrides only — defaults must not fight utility classes.
+/**
+ * Focus Reveal — Origin Kit stagger (scale + fade). No CSS filter —
+ * filter:blur was sticking mid-animation and wiping the hero.
+ */
 
-import {
-  motion,
-  useReducedMotion,
-  type Transition,
-} from "motion/react";
+import { motion, useReducedMotion, type Transition } from "motion/react";
 import {
   useEffect,
   useMemo,
@@ -22,10 +14,7 @@ import {
   type ElementType,
 } from "react";
 
-type FontStyle = CSSProperties;
-
 type TransitionValue = {
-  type?: string;
   duration?: number;
   delay?: number;
   ease?: string | number[];
@@ -36,9 +25,7 @@ type StaggerFrom = "start" | "center" | "end" | "random";
 
 type FocusRevealProps = {
   text?: string;
-  /** Optional inline font overrides. Prefer Tailwind via `className`. */
-  font?: FontStyle;
-  /** Optional inline color. Prefer Tailwind via `className` (e.g. text-white). */
+  font?: CSSProperties;
   color?: string;
   className?: string;
   as?: "h1" | "h2" | "h3" | "p" | "span";
@@ -48,18 +35,13 @@ type FocusRevealProps = {
   onComplete?: () => void;
 };
 
-const START_SCALE = 1.45;
-/** Cap blur animation (perf + project motion rules) */
-const MAX_BLUR = 20;
-/** ease-out-cubic */
 const EASE_OUT = [0.215, 0.61, 0.355, 1] as const;
 
 const DEFAULT_TRANSITION: TransitionValue = {
-  type: "tween",
-  duration: 0.3,
+  duration: 0.35,
   delay: 0,
   ease: "easeOut",
-  staggerChildren: 0.035,
+  staggerChildren: 0.028,
 };
 
 const MOTION_TAGS = {
@@ -87,7 +69,19 @@ const buildStaggerDelays = (
   baseDelay: number,
 ): number[] => {
   if (count === 0) return [];
-
+  if (from === "end") {
+    return Array.from(
+      { length: count },
+      (_, i) => baseDelay + (count - 1 - i) * each,
+    );
+  }
+  if (from === "center") {
+    const mid = (count - 1) / 2;
+    return Array.from(
+      { length: count },
+      (_, i) => baseDelay + Math.abs(i - mid) * each,
+    );
+  }
   if (from === "random") {
     const order = Array.from({ length: count }, (_, i) => i);
     for (let i = order.length - 1; i > 0; i--) {
@@ -96,36 +90,19 @@ const buildStaggerDelays = (
     }
     return order.map((rank) => baseDelay + rank * each);
   }
-
-  if (from === "end") {
-    return Array.from(
-      { length: count },
-      (_, i) => baseDelay + (count - 1 - i) * each,
-    );
-  }
-
-  if (from === "center") {
-    const mid = (count - 1) / 2;
-    return Array.from(
-      { length: count },
-      (_, i) => baseDelay + Math.abs(i - mid) * each,
-    );
-  }
-
   return Array.from({ length: count }, (_, i) => baseDelay + i * each);
 };
 
-const FocusReveal = ({
-  text = "Spotlight Reveal",
+export default function FocusReveal({
+  text = "",
   font,
   color,
   className = "",
   as: Tag = "h1",
-  blur = 20,
-  staggerFrom = "start",
+  staggerFrom = "center",
   transition = DEFAULT_TRANSITION,
   onComplete,
-}: FocusRevealProps) => {
+}: FocusRevealProps) {
   const reduceMotion = useReducedMotion();
   const completedRef = useRef(false);
   const onCompleteRef = useRef(onComplete);
@@ -135,88 +112,57 @@ const FocusReveal = ({
   const baseDelay = transition.delay ?? DEFAULT_TRANSITION.delay!;
   const staggerEach =
     transition.staggerChildren ?? DEFAULT_TRANSITION.staggerChildren!;
-  const ease = transition.ease ?? DEFAULT_TRANSITION.ease;
-
-  const chars = useMemo(() => text.split(""), [text]);
-  const lastIndex = chars.length - 1;
-  const safeBlur = Math.min(Math.max(blur, 0), MAX_BLUR);
-
-  // null → boolean from useReducedMotion should not restart the stagger
-  const skipMotion = reduceMotion === true;
+  const skip = reduceMotion === true;
+  const lastIndex = text.length - 1;
 
   const delays = useMemo(
     () =>
       buildStaggerDelays(
-        chars.length,
-        skipMotion ? 0 : staggerEach,
+        text.length,
+        skip ? 0 : staggerEach,
         staggerFrom,
         baseDelay,
       ),
-    [chars.length, skipMotion, staggerFrom, baseDelay, staggerEach],
+    [text.length, skip, staggerFrom, baseDelay, staggerEach],
   );
 
-  /** Split into words so we wrap between words, not mid-character */
   const words = useMemo(() => {
     const parts: { chars: string[]; startIndex: number }[] = [];
     let startIndex = 0;
-    const tokens = text.split(/(\s+)/);
-
-    for (const token of tokens) {
-      if (token.length === 0) continue;
-      const tokenChars = token.split("");
-      parts.push({ chars: tokenChars, startIndex });
-      startIndex += tokenChars.length;
+    for (const token of text.split(/(\s+)/)) {
+      if (!token) continue;
+      parts.push({ chars: token.split(""), startIndex });
+      startIndex += token.length;
     }
     return parts;
   }, [text]);
 
   useEffect(() => {
     completedRef.current = false;
-  }, [text, blur, staggerFrom, duration, baseDelay, staggerEach]);
+  }, [text, staggerFrom, duration, baseDelay, staggerEach]);
 
   useEffect(() => {
-    if (!skipMotion || !onCompleteRef.current || completedRef.current) return;
+    if (!skip || !onCompleteRef.current || completedRef.current) return;
     completedRef.current = true;
     onCompleteRef.current();
-  }, [skipMotion]);
+  }, [skip]);
 
-  const handleCharComplete = (index: number) => {
-    if (index !== lastIndex || completedRef.current) return;
-    completedRef.current = true;
-    onCompleteRef.current?.();
-  };
-
-  // Stable tag component — never call motion.create() during render
   const MotionTag = MOTION_TAGS[Tag];
 
-  const rootStyle: CSSProperties = {
-    margin: 0,
-    display: "block",
-    width: "100%",
-    ...(color ? { color } : null),
-    ...(font ?? null),
-  };
-
-  const hidden = skipMotion
-    ? { opacity: 0 }
-    : {
-        opacity: 0,
-        scale: START_SCALE,
-        filter: `blur(${safeBlur}px)`,
-      };
-  const visible = skipMotion
-    ? { opacity: 1 }
-    : {
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px)",
-      };
-
   return (
-    <MotionTag aria-label={text} className={className} style={rootStyle}>
+    <MotionTag
+      aria-label={text}
+      className={className}
+      style={{
+        margin: 0,
+        display: "block",
+        width: "100%",
+        ...(color ? { color } : null),
+        ...(font ?? null),
+      }}
+    >
       {words.map((word, wordIndex) => {
         const isWhitespace = word.chars.every((c) => /\s/.test(c));
-
         return (
           <span
             key={`word-${wordIndex}`}
@@ -227,20 +173,23 @@ const FocusReveal = ({
           >
             {word.chars.map((char, charOffset) => {
               const index = word.startIndex + charOffset;
-
               return (
                 <motion.span
                   key={`${char}-${index}`}
-                  className="inline-block will-change-[transform,opacity,filter]"
-                  initial={hidden}
-                  animate={visible}
+                  className="inline-block"
+                  initial={skip ? false : { opacity: 1, y: 18, scale: 1.06 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{
                     type: "tween",
-                    duration: skipMotion ? 0.15 : duration,
+                    duration: skip ? 0.01 : duration,
                     delay: delays[index] ?? 0,
-                    ease: resolveEase(ease),
+                    ease: resolveEase(transition.ease),
                   }}
-                  onAnimationComplete={() => handleCharComplete(index)}
+                  onAnimationComplete={() => {
+                    if (index !== lastIndex || completedRef.current) return;
+                    completedRef.current = true;
+                    onCompleteRef.current?.();
+                  }}
                 >
                   {char === " " ? "\u00A0" : char}
                 </motion.span>
@@ -251,9 +200,6 @@ const FocusReveal = ({
       })}
     </MotionTag>
   );
-};
+}
 
-FocusReveal.displayName = "Focus Reveal";
-
-export default FocusReveal;
 export type { FocusRevealProps, StaggerFrom };
