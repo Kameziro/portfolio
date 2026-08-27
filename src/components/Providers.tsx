@@ -29,6 +29,9 @@ const editorialTheme = {
       primaryShadow: "none",
       defaultShadow: "none",
       fontWeight: 600,
+      defaultGhostBorderColor: "rgba(236, 231, 220, 0.35)",
+      defaultGhostColor: "#ece7dc",
+      ghostBg: "transparent",
     },
     Menu: {
       darkItemBg: "transparent",
