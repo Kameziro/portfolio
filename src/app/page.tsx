@@ -23,8 +23,13 @@ export default function Home() {
           <Experience copy={copy} />
           <Contact copy={copy} />
         </main>
-        <footer className="border-t border-border px-6 py-10 text-center text-sm text-muted-foreground md:px-10">
-          <p>{copy.footer.legal}</p>
+        <footer className="border-t border-border px-6 py-8 md:px-10">
+          <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 text-sm text-muted-foreground sm:flex-row sm:items-center">
+            <p className="font-display text-foreground">{copy.footer.legal}</p>
+            <p className="text-[0.7rem] uppercase tracking-[0.18em]">
+              Portfólio · {new Date().getFullYear()}
+            </p>
+          </div>
         </footer>
       </div>
     </ClickSpark>

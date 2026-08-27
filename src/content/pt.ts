@@ -13,7 +13,7 @@ export const pt = {
   hero: {
     name: "Cleber Neto",
     role: "Engenheiro de Software Júnior · Full Stack Mobile e Web",
-    lead: "Construo produtos mobile e web que funcionam de verdade — inclusive offline, em campo e em escala governamental.",
+    lead: "Produtos mobile e web que funcionam de verdade — offline, em campo e em escala governamental.",
   },
   about: {
     title: "Sobre",

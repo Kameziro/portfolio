@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { FileText, Mail } from "lucide-react";
 import FadeContent from "@/components/FadeContent";
 import Magnet from "@/components/Magnet";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +11,9 @@ import { cn } from "@/lib/utils";
 import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
+
+const underlineField =
+  "field-underline h-11 rounded-none border-0 border-b border-border bg-transparent px-0 shadow-none focus-visible:border-primary focus-visible:ring-0 dark:bg-transparent";
 
 export function Contact({ copy }: Props) {
   const [submitted, setSubmitted] = useState(false);
@@ -21,81 +23,138 @@ export function Contact({ copy }: Props) {
     setSubmitted(true);
   }
 
+  const softLinks = [
+    { href: `mailto:${copy.contact.email}`, label: copy.contact.email, external: false },
+    {
+      href: copy.contact.linkedin,
+      label: copy.contact.linkedinLabel,
+      external: true,
+    },
+    {
+      href: copy.contact.pdfHref,
+      label: copy.contact.pdfLabel,
+      external: false,
+      download: true,
+    },
+  ];
+
   return (
     <section
       id="contato"
       aria-labelledby="contato-title"
-      className="mx-auto max-w-5xl border-t border-border px-6 py-24 md:px-10 md:py-28"
+      className="mx-auto max-w-6xl border-t border-border px-6 py-28 md:px-10 md:py-36"
     >
-      <FadeContent duration={850}>
-        <p className="text-sm uppercase tracking-[0.2em] text-primary">{copy.contact.title}</p>
-        <h2
-          id="contato-title"
-          className="mt-4 max-w-xl font-display text-3xl tracking-tight text-foreground md:text-4xl"
-        >
-          {copy.contact.lead}
-        </h2>
+      <div className="grid gap-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-20">
+        <FadeContent duration={850}>
+          <p className="text-[0.7rem] uppercase tracking-[0.24em] text-primary">
+            {copy.contact.title}
+          </p>
+          <h2
+            id="contato-title"
+            className="mt-5 max-w-md font-display text-3xl leading-tight tracking-tight text-foreground md:text-4xl"
+          >
+            {copy.contact.lead}
+          </h2>
 
-        <div className="mt-8 flex flex-wrap gap-2">
-          <a
-            href={`mailto:${copy.contact.email}`}
-            className={cn(buttonVariants({ variant: "link" }), "px-0 text-foreground")}
-          >
-            <Mail />
-            {copy.contact.email}
-          </a>
-          <a
-            href={copy.contact.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className={cn(buttonVariants({ variant: "link" }), "px-0 text-foreground")}
-          >
-            {copy.contact.linkedinLabel}
-          </a>
-          <a
-            href={copy.contact.pdfHref}
-            download
-            className={cn(buttonVariants({ variant: "link" }), "px-0 text-foreground")}
-          >
-            <FileText />
-            {copy.contact.pdfLabel}
-          </a>
-        </div>
-      </FadeContent>
+          <dl className="mt-12 space-y-0 border-t border-border">
+            {softLinks.map((link) => (
+              <div
+                key={link.href}
+                className="flex items-baseline justify-between gap-6 border-b border-border py-5"
+              >
+                <dt className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
+                  {link.download
+                    ? "CV"
+                    : link.href.startsWith("mailto:")
+                      ? "E-mail"
+                      : "Social"}
+                </dt>
+                <dd className="text-right">
+                  <a
+                    href={link.href}
+                    {...(link.external
+                      ? { target: "_blank", rel: "noreferrer" }
+                      : {})}
+                    {...(link.download ? { download: true } : {})}
+                    className="text-sm text-foreground transition-colors hover:text-primary md:text-base"
+                  >
+                    {link.label}
+                    <span aria-hidden className="ml-1 inline-block text-muted-foreground">
+                      ↗
+                    </span>
+                  </a>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </FadeContent>
 
-      <FadeContent duration={900} delay={80} className="mt-12 max-w-xl">
-        <p className="mb-6 text-sm text-muted-foreground">{copy.contact.form.note}</p>
-        <form onSubmit={onSubmit} className="space-y-5" noValidate>
-          <div className="space-y-2">
-            <Label htmlFor="name">{copy.contact.form.name}</Label>
-            <Input id="name" name="name" autoComplete="name" className="h-11 rounded-sm" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">{copy.contact.form.email}</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              className="h-11 rounded-sm"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="message">{copy.contact.form.message}</Label>
-            <Textarea id="message" name="message" rows={4} className="rounded-sm" />
-          </div>
-          <Magnet padding={36} magnetStrength={2.5}>
-            <Button type="submit" variant="outline" size="lg" className="rounded-sm px-5">
-              {copy.contact.form.submit}
-            </Button>
-          </Magnet>
-          {submitted ? (
-            <p className="text-sm text-muted-foreground" role="status">
-              Formulário só UI por enquanto — use e-mail ou LinkedIn para falar comigo.
-            </p>
-          ) : null}
-        </form>
-      </FadeContent>
+        <FadeContent duration={900} delay={80}>
+          <p className="mb-8 text-sm text-muted-foreground">{copy.contact.form.note}</p>
+          <form onSubmit={onSubmit} className="space-y-8" noValidate>
+            <div className="space-y-3">
+              <Label
+                htmlFor="name"
+                className="font-display text-base font-normal text-foreground"
+              >
+                {copy.contact.form.name}
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                autoComplete="name"
+                className={cn(underlineField)}
+              />
+            </div>
+            <div className="space-y-3">
+              <Label
+                htmlFor="email"
+                className="font-display text-base font-normal text-foreground"
+              >
+                {copy.contact.form.email}
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                className={cn(underlineField)}
+              />
+            </div>
+            <div className="space-y-3">
+              <Label
+                htmlFor="message"
+                className="font-display text-base font-normal text-foreground"
+              >
+                {copy.contact.form.message}
+              </Label>
+              <Textarea
+                id="message"
+                name="message"
+                rows={4}
+                className={cn(
+                  underlineField,
+                  "min-h-28 resize-y py-3 focus-visible:ring-0",
+                )}
+              />
+            </div>
+            <Magnet padding={36} magnetStrength={2.5}>
+              <Button
+                type="submit"
+                size="lg"
+                className="rounded-none px-8 text-[0.8rem] uppercase tracking-[0.14em]"
+              >
+                {copy.contact.form.submit}
+              </Button>
+            </Magnet>
+            {submitted ? (
+              <p className="text-sm text-muted-foreground" role="status">
+                Formulário só UI por enquanto — use e-mail ou LinkedIn para falar comigo.
+              </p>
+            ) : null}
+          </form>
+        </FadeContent>
+      </div>
     </section>
   );
 }
