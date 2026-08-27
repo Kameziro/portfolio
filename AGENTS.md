@@ -16,4 +16,5 @@ Single-context: one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/age
 - Dev server: `npm run dev -- --hostname 0.0.0.0 --port 3000` (also configured in `.cursor/environment.json` terminals)
 - Production smoke against a running server: `npm run build && npm run start`, then `npm run smoke`
 - App URL: `http://localhost:3000`
-- No secrets required for local Portfólio v1 (Contato form is UI-only)
+- Portfólio v1 runs without secrets (Contato form is UI-only)
+- Optional secret `ORIGINKIT_API_KEY`: needed only to fetch/add Origin Kit components via `npx originkit@latest add <name>` (UI weekly quota + section daily quota apply). Not required to build or run the site.

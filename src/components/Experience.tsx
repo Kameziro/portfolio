@@ -1,6 +1,7 @@
 "use client";
 
-import FadeContent from "@/components/FadeContent";
+import ScrollEmerge from "@/components/originkit/ui/scroll-emerge";
+import TextEmerge from "@/components/originkit/ui/text-emerge";
 import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
@@ -12,17 +13,17 @@ export function Experience({ copy }: Props) {
       aria-labelledby="experiencia-title"
       className="mx-auto max-w-6xl border-t border-foreground/15 px-6 py-28 md:px-10 md:py-36"
     >
-      <FadeContent duration={800}>
+      <ScrollEmerge>
         <p className="text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
           {copy.experience.title}
         </p>
-        <h2
+        <TextEmerge
           id="experiencia-title"
+          text="Trajetória"
+          as="h2"
           className="mt-5 font-display text-3xl tracking-tight text-foreground md:text-4xl"
-        >
-          Trajetória
-        </h2>
-      </FadeContent>
+        />
+      </ScrollEmerge>
 
       <ol className="mt-16 list-none space-y-0 border-t border-dotted border-foreground/25 p-0">
         {copy.experience.roles.map((role, index) => (
@@ -30,7 +31,7 @@ export function Experience({ copy }: Props) {
             key={`${role.title}-${role.period}`}
             className="border-b border-dotted border-foreground/25"
           >
-            <FadeContent duration={850} delay={index * 70}>
+            <ScrollEmerge delay={index * 0.07}>
               <div className="grid gap-4 py-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:gap-12 md:py-12">
                 <div>
                   <h3 className="font-display text-2xl tracking-tight text-foreground md:text-3xl">
@@ -49,12 +50,12 @@ export function Experience({ copy }: Props) {
                   </p>
                 </div>
               </div>
-            </FadeContent>
+            </ScrollEmerge>
           </li>
         ))}
       </ol>
 
-      <FadeContent duration={800} className="mt-16">
+      <ScrollEmerge className="mt-16">
         <h3 className="font-display text-lg text-foreground">
           {copy.experience.education.title}
         </h3>
@@ -76,7 +77,7 @@ export function Experience({ copy }: Props) {
             </li>
           ))}
         </ul>
-      </FadeContent>
+      </ScrollEmerge>
     </section>
   );
 }

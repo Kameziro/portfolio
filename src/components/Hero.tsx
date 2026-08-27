@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import BlurText from "@/components/BlurText";
+import FocusReveal from "@/components/originkit/ui/focus-reveal";
+import TextEmerge from "@/components/originkit/ui/text-emerge";
 import type { PortfolioCopy } from "@/content/pt";
 
 const Silk = dynamic(() => import("@/components/Silk"), {
@@ -12,11 +13,8 @@ const Silk = dynamic(() => import("@/components/Silk"), {
 type Props = { copy: PortfolioCopy };
 
 /**
- * Mobbin refs:
- * - Unseen Studio hero: full-bleed dark, brand as dominant centered signal
- * - Craft Agency hero: atmospheric glow + large serif identity + short lead
- * https://mobbin.com/sites/sections/975a7e67-2632-40cb-ab2b-4a9b1a2fc84f
- * https://mobbin.com/sites/sections/cbde3ed5-2c73-47ee-91a4-6b33cb7efa0e
+ * Mobbin hero composition + Origin Kit Focus Reveal / Text Emerge
+ * (Focus Reveal delivered via originkit add hero-13 companion)
  */
 export function Hero({ copy }: Props) {
   return (
@@ -42,24 +40,37 @@ export function Hero({ copy }: Props) {
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col items-center justify-center px-6 text-center md:px-10">
-        <p className="text-[0.65rem] uppercase tracking-[0.35em] text-muted-foreground">
-          {copy.hero.role}
-        </p>
+        <TextEmerge
+          text={copy.hero.role}
+          as="p"
+          className="text-[0.65rem] uppercase tracking-[0.35em] text-muted-foreground"
+          staggerFrom="center"
+          transition={{ duration: 0.4, staggerChildren: 0.04 }}
+        />
 
         <div className="mt-8 w-full max-w-5xl">
-          <h1 className="sr-only">{copy.hero.name}</h1>
-          <BlurText
+          <FocusReveal
             text={copy.hero.name.toUpperCase()}
-            delay={40}
-            animateBy="letters"
-            direction="top"
-            className="justify-center font-sans text-5xl font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-foreground sm:text-6xl md:text-7xl lg:text-[6.5rem]"
+            as="h1"
+            blur={16}
+            staggerFrom="center"
+            className="text-center font-sans text-5xl font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-foreground sm:text-6xl md:text-7xl lg:text-[6.5rem]"
+            transition={{
+              duration: 0.35,
+              delay: 0.08,
+              staggerChildren: 0.03,
+              ease: "easeOut",
+            }}
           />
         </div>
 
-        <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
-          {copy.hero.lead}
-        </p>
+        <TextEmerge
+          text={copy.hero.lead}
+          as="p"
+          className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base"
+          staggerFrom="start"
+          transition={{ duration: 0.45, delay: 0.35, staggerChildren: 0.05 }}
+        />
 
         <a
           href="#projetos"
