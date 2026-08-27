@@ -14,9 +14,9 @@ export default function Home() {
 
   return (
     <ClickSpark sparkColor="#d4a017" sparkCount={10} sparkRadius={18} duration={450}>
-      <div className="relative min-h-screen overflow-x-hidden bg-background">
+      <div className="relative min-h-screen bg-background">
         <SiteHeader copy={copy} />
-        <main>
+        <main className="relative">
           <Hero copy={copy} />
           <About copy={copy} />
           <Projects copy={copy} />

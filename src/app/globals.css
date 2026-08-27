@@ -93,15 +93,19 @@ body {
   font-family: var(--font-display), ui-serif, Georgia, serif;
 }
 
-.silk-stage {
+/* React Bits Silk / Origin Kit WebGL canvases fill their stage */
+.silk-stage,
+[data-ok-canvas],
+.ok-fullscreen-canvas {
   position: absolute;
   inset: 0;
-  z-index: 0;
   pointer-events: none;
-  opacity: 0.55;
 }
 
-.silk-stage canvas {
+.silk-stage canvas,
+[data-ok-canvas] canvas,
+.ok-fullscreen-canvas canvas {
+  display: block;
   width: 100% !important;
   height: 100% !important;
 }

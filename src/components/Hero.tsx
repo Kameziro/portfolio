@@ -17,22 +17,25 @@ type Props = { copy: PortfolioCopy };
 
 export function Hero({ copy }: Props) {
   return (
-    <section
-      id="topo"
-      aria-label="Hero"
-      className="relative mx-auto flex min-h-[88vh] max-w-5xl flex-col justify-end overflow-hidden px-6 pb-24 pt-28 md:px-10 md:pb-32"
-    >
-      <div className="silk-stage absolute inset-x-[-10%] top-[-10%] h-[70%] md:inset-x-0">
-        <Silk
-          speed={3.2}
-          scale={1.05}
-          color="#3a2e12"
-          noiseIntensity={1.1}
-          rotation={0.08}
-        />
+    <section id="topo" aria-label="Hero" className="relative isolate min-h-[100svh]">
+      {/* Full-viewport Silk — outside content column so it never clips to max-w */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
+        <div className="absolute inset-0 opacity-70">
+          <Silk
+            speed={3.2}
+            scale={1.1}
+            color="#3a2e12"
+            noiseIntensity={1.15}
+            rotation={0.08}
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background" />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-5xl flex-col justify-end px-6 pb-24 pt-28 md:px-10 md:pb-32">
         <ShinyText
           text="PORTFÓLIO"
           speed={2.4}
