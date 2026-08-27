@@ -1,6 +1,7 @@
 "use client";
 
-import { Flex, Typography } from "antd";
+import FadeContent from "@/components/FadeContent";
+import { Separator } from "@/components/ui/separator";
 import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
@@ -10,42 +11,37 @@ export function Projects({ copy }: Props) {
     <section
       id="projetos"
       aria-labelledby="projetos-title"
-      className="mx-auto max-w-5xl border-t border-line px-6 py-24 md:px-10 md:py-28"
+      className="mx-auto max-w-5xl border-t border-border px-6 py-24 md:px-10 md:py-28"
     >
-      <Typography.Text className="!text-sm !uppercase !tracking-[0.2em] !text-accent">
-        {copy.projects.title}
-      </Typography.Text>
-      <Typography.Title
-        id="projetos-title"
-        level={2}
-        className="!mt-4 !mb-0 !font-[family-name:var(--font-display)] !text-3xl !tracking-tight !text-fg md:!text-4xl"
-      >
-        Trabalho em destaque
-      </Typography.Title>
+      <FadeContent duration={800} threshold={0.15}>
+        <p className="text-sm uppercase tracking-[0.2em] text-primary">{copy.projects.title}</p>
+        <h2
+          id="projetos-title"
+          className="mt-4 font-display text-3xl tracking-tight text-foreground md:text-4xl"
+        >
+          Trabalho em destaque
+        </h2>
+      </FadeContent>
+
       <ul className="mt-12 list-none space-y-0 p-0">
-        {copy.projects.items.map((project) => (
-          <li
-            key={project.name}
-            className="group border-t border-line py-8 first:border-t-0 first:pt-0 last:pb-0"
-          >
-            <Flex
-              vertical
-              gap={12}
-              className="md:!flex-row md:!items-baseline md:!justify-between"
-            >
-              <Typography.Title
-                level={3}
-                className="!mb-0 !font-[family-name:var(--font-display)] !text-2xl !text-fg transition-colors group-hover:!text-accent md:!text-3xl"
-              >
-                {project.name}
-              </Typography.Title>
-              <Typography.Text className="!text-sm !uppercase !tracking-[0.14em] !text-fg-muted md:!text-right">
-                {project.stack}
-              </Typography.Text>
-            </Flex>
-            <Typography.Paragraph className="!mt-3 !mb-0 max-w-2xl !text-base !leading-relaxed !text-fg-muted md:!text-lg">
-              {project.summary}
-            </Typography.Paragraph>
+        {copy.projects.items.map((project, index) => (
+          <li key={project.name}>
+            {index > 0 ? <Separator className="bg-border" /> : null}
+            <FadeContent duration={900} delay={index * 80} threshold={0.2}>
+              <div className="group py-8 first:pt-0">
+                <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between md:gap-10">
+                  <h3 className="font-display text-2xl text-foreground transition-colors group-hover:text-primary md:text-3xl">
+                    {project.name}
+                  </h3>
+                  <p className="text-sm uppercase tracking-[0.14em] text-muted-foreground md:text-right">
+                    {project.stack}
+                  </p>
+                </div>
+                <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {project.summary}
+                </p>
+              </div>
+            </FadeContent>
           </li>
         ))}
       </ul>

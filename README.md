@@ -1,18 +1,23 @@
 # Portfólio — Cleber Neto
 
-Site pessoal (Next.js App Router + TypeScript + Tailwind).
+Site pessoal com **Next.js App Router**, **shadcn/ui**, **React Bits** e Tailwind.
 
 ## Dev
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
 Abra [http://localhost:3000](http://localhost:3000).
 
+## Stack de UI
+
+- shadcn/ui — Button, Input, Textarea, Label, Separator
+- React Bits — Silk, BlurText, ShinyText, FadeContent, Magnet, ClickSpark
+
 ## Docs
 
-- `CONTEXT.md` — glossário de domínio
+- `CONTEXT.md` — glossário
 - `docs/adr/` — decisões
 - `docs/specs/` — spec e tickets

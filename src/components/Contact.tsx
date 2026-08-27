@@ -1,96 +1,101 @@
 "use client";
 
-import { LinkedinOutlined, MailOutlined, FilePdfOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, Typography } from "antd";
+import { useState, type FormEvent } from "react";
+import { FileText, Mail } from "lucide-react";
+import FadeContent from "@/components/FadeContent";
+import Magnet from "@/components/Magnet";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
 
-type ContactFormValues = {
-  name?: string;
-  email?: string;
-  message?: string;
-};
-
 export function Contact({ copy }: Props) {
-  const [form] = Form.useForm<ContactFormValues>();
+  const [submitted, setSubmitted] = useState(false);
 
-  function onFinish(_values: ContactFormValues) {
-    // UI-only in v1 — no real delivery (T1/T3)
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitted(true);
   }
 
   return (
     <section
       id="contato"
       aria-labelledby="contato-title"
-      className="mx-auto max-w-5xl border-t border-line px-6 py-24 md:px-10 md:py-28"
+      className="mx-auto max-w-5xl border-t border-border px-6 py-24 md:px-10 md:py-28"
     >
-      <Typography.Text className="!text-sm !uppercase !tracking-[0.2em] !text-accent">
-        {copy.contact.title}
-      </Typography.Text>
-      <Typography.Title
-        id="contato-title"
-        level={2}
-        className="!mt-4 !mb-0 max-w-xl !font-[family-name:var(--font-display)] !text-3xl !tracking-tight !text-fg md:!text-4xl"
-      >
-        {copy.contact.lead}
-      </Typography.Title>
+      <FadeContent duration={850}>
+        <p className="text-sm uppercase tracking-[0.2em] text-primary">{copy.contact.title}</p>
+        <h2
+          id="contato-title"
+          className="mt-4 max-w-xl font-display text-3xl tracking-tight text-foreground md:text-4xl"
+        >
+          {copy.contact.lead}
+        </h2>
 
-      <Space wrap size="middle" className="!mt-8">
-        <Button
-          type="link"
-          icon={<MailOutlined />}
-          href={`mailto:${copy.contact.email}`}
-          className="!px-0"
-        >
-          {copy.contact.email}
-        </Button>
-        <Button
-          type="link"
-          icon={<LinkedinOutlined />}
-          href={copy.contact.linkedin}
-          target="_blank"
-          rel="noreferrer"
-          className="!px-0"
-        >
-          {copy.contact.linkedinLabel}
-        </Button>
-        <Button
-          type="link"
-          icon={<FilePdfOutlined />}
-          href={copy.contact.pdfHref}
-          download
-          className="!px-0"
-        >
-          {copy.contact.pdfLabel}
-        </Button>
-      </Space>
+        <div className="mt-8 flex flex-wrap gap-2">
+          <a
+            href={`mailto:${copy.contact.email}`}
+            className={cn(buttonVariants({ variant: "link" }), "px-0 text-foreground")}
+          >
+            <Mail />
+            {copy.contact.email}
+          </a>
+          <a
+            href={copy.contact.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(buttonVariants({ variant: "link" }), "px-0 text-foreground")}
+          >
+            {copy.contact.linkedinLabel}
+          </a>
+          <a
+            href={copy.contact.pdfHref}
+            download
+            className={cn(buttonVariants({ variant: "link" }), "px-0 text-foreground")}
+          >
+            <FileText />
+            {copy.contact.pdfLabel}
+          </a>
+        </div>
+      </FadeContent>
 
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        requiredMark={false}
-        className="!mt-12 max-w-xl"
-      >
-        <Typography.Paragraph type="secondary" className="!mb-6">
-          {copy.contact.form.note}
-        </Typography.Paragraph>
-        <Form.Item name="name" label={copy.contact.form.name}>
-          <Input size="large" autoComplete="name" />
-        </Form.Item>
-        <Form.Item name="email" label={copy.contact.form.email}>
-          <Input size="large" type="email" autoComplete="email" />
-        </Form.Item>
-        <Form.Item name="message" label={copy.contact.form.message}>
-          <Input.TextArea rows={4} size="large" />
-        </Form.Item>
-        <Form.Item>
-          <Button htmlType="submit" size="large" ghost>
-            {copy.contact.form.submit}
-          </Button>
-        </Form.Item>
-      </Form>
+      <FadeContent duration={900} delay={80} className="mt-12 max-w-xl">
+        <p className="mb-6 text-sm text-muted-foreground">{copy.contact.form.note}</p>
+        <form onSubmit={onSubmit} className="space-y-5" noValidate>
+          <div className="space-y-2">
+            <Label htmlFor="name">{copy.contact.form.name}</Label>
+            <Input id="name" name="name" autoComplete="name" className="h-11 rounded-sm" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="email">{copy.contact.form.email}</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              className="h-11 rounded-sm"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="message">{copy.contact.form.message}</Label>
+            <Textarea id="message" name="message" rows={4} className="rounded-sm" />
+          </div>
+          <Magnet padding={36} magnetStrength={2.5}>
+            <Button type="submit" variant="outline" size="lg" className="rounded-sm px-5">
+              {copy.contact.form.submit}
+            </Button>
+          </Magnet>
+          {submitted ? (
+            <p className="text-sm text-muted-foreground" role="status">
+              Formulário só UI por enquanto — use e-mail ou LinkedIn para falar comigo.
+            </p>
+          ) : null}
+        </form>
+      </FadeContent>
     </section>
   );
 }

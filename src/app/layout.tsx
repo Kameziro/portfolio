@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Figtree } from "next/font/google";
 import { pt } from "@/content/pt";
-import { Providers } from "@/components/Providers";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
 const display = Fraunces({
@@ -26,9 +26,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${display.variable} ${sans.variable} h-full`}>
-      <body className="min-h-full antialiased">
-        <Providers>{children}</Providers>
+    <html
+      lang="pt-BR"
+      className={cn("dark h-full", display.variable, sans.variable)}
+    >
+      <body className="min-h-full bg-background font-sans text-foreground antialiased">
+        {children}
       </body>
     </html>
   );
