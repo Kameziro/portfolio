@@ -12,6 +12,10 @@ _Avoid_: Landing page, site de conversão, funil
 Pessoa que navega o Portfólio para entender Cleber; o público-alvo inclui recrutadores e hiring managers no Brasil e no mercado internacional/remoto.
 _Avoid_: Usuário, customer, cliente
 
+**Cleber Neto**:
+Nome de marca usado no hero do Portfólio. O nome completo aparece no about, rodapé e PDF.
+_Avoid_: Usar o nome completo como sinal principal no primeiro viewport
+
 **Idioma principal**:
 Português — idioma em que o Portfólio carrega por padrão.
 _Avoid_: —
@@ -25,9 +29,9 @@ Trabalho em destaque no Portfólio, apresentado de forma breve: o que é, o pape
 _Avoid_: Case study (como formato padrão), item de portfólio, card de projeto (como conceito de domínio)
 
 **Experiência**:
-Trecho do Portfólio que apresenta papéis profissionais e formação (o currículo no próprio site).
-_Avoid_: Timeline genérica, histórico
+Trecho do Portfólio que apresenta papéis profissionais e formação de forma condensada (cargo, período, 1–2 linhas), não o PDF inteiro colado na página.
+_Avoid_: Timeline genérica, histórico completo
 
 **Contato**:
-Caminho suave para o Visitante falar com Cleber: formulário simples, mais atalhos passivos (ex.: LinkedIn).
+Caminho suave para o Visitante falar com Cleber: formulário simples (UI na v1), LinkedIn, e-mail e download do PDF do CV.
 _Avoid_: Lead form, funil de vendas
