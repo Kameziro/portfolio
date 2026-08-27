@@ -32,6 +32,8 @@ export const pt = {
         summary:
           "App em React Native com arquitetura offline-first para entrevistas de agentes de orientação rural em áreas remotas.",
         stack: "React Native · JavaScript · Offline-first",
+        logo: "/projects/aor.png",
+        logoAlt: "Logo AOR",
       },
       {
         name: "MSQualifica",
@@ -39,6 +41,8 @@ export const pt = {
         summary:
           "Sistema web para o Governo do Mato Grosso do Sul, conectando cidadãos a oportunidades no mercado de trabalho.",
         stack: "Next.js · Node.js · Java · Quarkus · SQL Server",
+        logo: "/projects/msqualifica.png",
+        logoAlt: "Logo MS Qualifica Digital",
       },
     ],
   },
