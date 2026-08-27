@@ -4,7 +4,7 @@
 
 ### Issue tracker
 
-Issues and specs live as local markdown under `.scratch/` (no `gh` required). See `docs/agents/issue-tracker.md`.
+Issues live in this repo's GitHub Issues (`gh` when available, or the GitHub website). See `docs/agents/issue-tracker.md`.
 
 ### Domain docs
 
