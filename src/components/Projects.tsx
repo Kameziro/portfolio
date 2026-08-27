@@ -34,11 +34,11 @@ export function Projects({ copy }: Props) {
         </div>
       </FadeContent>
 
-      <ul className="mt-16 list-none space-y-0 border-t border-dotted border-foreground/25 p-0">
+      <ul className="mt-16 list-none space-y-0 border-t border-dashed border-foreground/35 p-0">
         {copy.projects.items.map((project, index) => (
             <li
               key={project.name}
-              className="border-b border-dotted border-foreground/25"
+              className="border-b border-dashed border-foreground/35"
             >
               <FadeContent duration={900} delay={index * 80} threshold={0.2}>
                 <article className="grid gap-6 py-12 md:grid-cols-[5rem_minmax(0,1fr)] md:gap-10 lg:grid-cols-[5rem_minmax(0,1.2fr)_minmax(0,0.9fr)]">
