@@ -13,7 +13,7 @@ import type { PortfolioCopy } from "@/content/pt";
 type Props = { copy: PortfolioCopy };
 
 const underlineField =
-  "field-underline h-11 rounded-none border-0 border-b border-border bg-transparent px-0 shadow-none focus-visible:border-primary focus-visible:ring-0 dark:bg-transparent";
+  "h-11 rounded-none border-0 border-b border-foreground/35 bg-transparent px-0 shadow-none outline-none ring-0 focus-visible:border-primary focus-visible:ring-0 dark:bg-transparent dark:focus-visible:ring-0";
 
 export function Contact({ copy }: Props) {
   const [submitted, setSubmitted] = useState(false);
