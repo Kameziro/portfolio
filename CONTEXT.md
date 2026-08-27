@@ -21,8 +21,8 @@ Inglês — idioma alternativo disponível via toggle global de i18n.
 _Avoid_: —
 
 **Projeto**:
-Trabalho em destaque no Portfólio, apresentado como narrativa (contexto, papel, resultado), não só como linha de currículo.
-_Avoid_: Case study genérico, item de portfólio, card de projeto (como conceito de domínio)
+Trabalho em destaque no Portfólio, apresentado de forma breve: o que é, o papel de Cleber e a stack — não um case study longo.
+_Avoid_: Case study (como formato padrão), item de portfólio, card de projeto (como conceito de domínio)
 
 **Experiência**:
 Trecho do Portfólio que apresenta papéis profissionais e formação (o currículo no próprio site).
