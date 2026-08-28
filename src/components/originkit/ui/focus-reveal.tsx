@@ -5,13 +5,12 @@
  * filter:blur was sticking mid-animation and wiping the hero.
  */
 
-import { motion, useReducedMotion, type Transition } from "motion/react";
+import { motion, type Transition } from "motion/react";
 import {
   useEffect,
   useMemo,
   useRef,
   type CSSProperties,
-  type ElementType,
 } from "react";
 
 type TransitionValue = {
@@ -35,22 +34,14 @@ type FocusRevealProps = {
   onComplete?: () => void;
 };
 
-const EASE_OUT = [0.215, 0.61, 0.355, 1] as const;
+const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 const DEFAULT_TRANSITION: TransitionValue = {
-  duration: 0.35,
+  duration: 0.28,
   delay: 0,
   ease: "easeOut",
   staggerChildren: 0.028,
 };
-
-const MOTION_TAGS = {
-  h1: motion.h1,
-  h2: motion.h2,
-  h3: motion.h3,
-  p: motion.p,
-  span: motion.span,
-} as const satisfies Record<string, ElementType>;
 
 const resolveEase = (
   ease: TransitionValue["ease"],
@@ -103,7 +94,6 @@ export default function FocusReveal({
   transition = DEFAULT_TRANSITION,
   onComplete,
 }: FocusRevealProps) {
-  const reduceMotion = useReducedMotion();
   const completedRef = useRef(false);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
@@ -112,18 +102,17 @@ export default function FocusReveal({
   const baseDelay = transition.delay ?? DEFAULT_TRANSITION.delay!;
   const staggerEach =
     transition.staggerChildren ?? DEFAULT_TRANSITION.staggerChildren!;
-  const skip = reduceMotion === true;
   const lastIndex = text.length - 1;
 
   const delays = useMemo(
     () =>
       buildStaggerDelays(
         text.length,
-        skip ? 0 : staggerEach,
+        staggerEach,
         staggerFrom,
         baseDelay,
       ),
-    [text.length, skip, staggerFrom, baseDelay, staggerEach],
+    [text.length, staggerFrom, baseDelay, staggerEach],
   );
 
   const words = useMemo(() => {
@@ -141,16 +130,8 @@ export default function FocusReveal({
     completedRef.current = false;
   }, [text, staggerFrom, duration, baseDelay, staggerEach]);
 
-  useEffect(() => {
-    if (!skip || !onCompleteRef.current || completedRef.current) return;
-    completedRef.current = true;
-    onCompleteRef.current();
-  }, [skip]);
-
-  const MotionTag = MOTION_TAGS[Tag];
-
   return (
-    <MotionTag
+    <Tag
       aria-label={text}
       className={className}
       style={{
@@ -177,11 +158,17 @@ export default function FocusReveal({
                 <motion.span
                   key={`${char}-${index}`}
                   className="inline-block"
-                  initial={skip ? false : { opacity: 1, y: 18, scale: 1.06 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  initial={{
+                    opacity: 0,
+                    transform: "translateY(8px) scale(0.96)",
+                  }}
+                  animate={{
+                    opacity: 1,
+                    transform: "translateY(0px) scale(1)",
+                  }}
                   transition={{
                     type: "tween",
-                    duration: skip ? 0.01 : duration,
+                    duration,
                     delay: delays[index] ?? 0,
                     ease: resolveEase(transition.ease),
                   }}
@@ -198,7 +185,7 @@ export default function FocusReveal({
           </span>
         );
       })}
-    </MotionTag>
+    </Tag>
   );
 }
 

@@ -23,10 +23,12 @@ export default function Home() {
         <Experience copy={copy} />
         <Contact copy={copy} />
       </main>
-      <footer className="border-t border-foreground/15 px-6 py-8 md:px-10">
+      <footer className="border-t-2 border-foreground px-6 py-8 md:px-10">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p className="font-display text-foreground">{copy.footer.legal}</p>
-          <p className="font-mono text-[0.65rem]">© {new Date().getFullYear()}</p>
+          <p className="pixel-title text-sm text-foreground">{copy.footer.legal}</p>
+          <p className="font-mono text-lg text-pixel-gold">
+            © {new Date().getFullYear()}
+          </p>
         </div>
       </footer>
     </div>

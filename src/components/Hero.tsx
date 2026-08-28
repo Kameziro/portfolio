@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import FocusReveal from "@/components/originkit/ui/focus-reveal";
 import TextEmerge from "@/components/originkit/ui/text-emerge";
 import { HeroAmbient } from "@/components/HeroAmbient";
@@ -7,9 +8,8 @@ import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
 
-/**
- * Mobbin hero + Origin Kit Focus Reveal / Text Emerge + CSS ambient mesh
- */
+const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+
 export function Hero({ copy }: Props) {
   return (
     <section
@@ -22,28 +22,27 @@ export function Hero({ copy }: Props) {
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
         <HeroAmbient />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/15 to-background" />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col items-center justify-center px-6 text-center md:px-10">
         <TextEmerge
           text={copy.hero.role}
           as="p"
-          className="text-[0.65rem] uppercase tracking-[0.35em] text-muted-foreground"
+          className="pixel-kicker"
           staggerFrom="center"
-          transition={{ duration: 0.4, staggerChildren: 0.04 }}
+          play="enter"
+          transition={{ duration: 0.28, staggerChildren: 0.04 }}
         />
 
         <div className="mt-8 w-full max-w-5xl">
           <FocusReveal
             text={copy.hero.name.toUpperCase()}
             as="h1"
-            blur={16}
             staggerFrom="center"
-            className="text-center font-sans text-5xl font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-foreground sm:text-6xl md:text-7xl lg:text-[6.5rem]"
+            className="pixel-title text-center text-4xl text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
             transition={{
-              duration: 0.35,
-              delay: 0.08,
+              duration: 0.28,
+              delay: 0.06,
               staggerChildren: 0.03,
               ease: "easeOut",
             }}
@@ -53,17 +52,27 @@ export function Hero({ copy }: Props) {
         <TextEmerge
           text={copy.hero.lead}
           as="p"
-          className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base"
+          className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground md:text-xl"
           staggerFrom="start"
-          transition={{ duration: 0.45, delay: 0.35, staggerChildren: 0.05 }}
+          play="enter"
+          transition={{ duration: 0.28, delay: 0.22, staggerChildren: 0.04 }}
         />
 
-        <a
-          href="#projetos"
-          className="mt-10 text-[0.7rem] uppercase tracking-[0.22em] text-foreground underline decoration-foreground/50 underline-offset-8 transition-colors hover:decoration-foreground"
+        <motion.div
+          className="mt-12"
+          initial={{ opacity: 0, transform: "translateY(8px)" }}
+          animate={{ opacity: 1, transform: "translateY(0px)" }}
+          transition={{
+            type: "tween",
+            duration: 0.2,
+            delay: 0.55,
+            ease: EASE_OUT,
+          }}
         >
-          Ver projetos
-        </a>
+          <a href="#projetos" className="pixel-btn pixel-caret">
+            Ver projetos
+          </a>
+        </motion.div>
       </div>
     </section>
   );

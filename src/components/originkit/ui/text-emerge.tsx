@@ -4,8 +4,9 @@
  * Text Emerge — word stagger on scroll (opacity + y).
  */
 
-import { motion, useReducedMotion, type Transition } from "motion/react";
-import { useMemo, type CSSProperties, type ElementType } from "react";
+import { motion, type Transition } from "motion/react";
+import { useMemo, type CSSProperties } from "react";
+import { useMounted } from "@/hooks/use-mounted";
 
 type StaggerFrom = "start" | "center" | "end" | "random";
 
@@ -25,25 +26,18 @@ type TextEmergeProps = {
   staggerFrom?: StaggerFrom;
   transition?: TransitionValue;
   once?: boolean;
+  /** enter = play on mount (hero); scroll = whileInView after hydrate */
+  play?: "scroll" | "enter";
 };
 
-const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 const DEFAULT_TRANSITION: TransitionValue = {
-  duration: 0.5,
+  duration: 0.28,
   delay: 0,
   ease: "easeOut",
-  staggerChildren: 0.045,
+  staggerChildren: 0.04,
 };
-
-const MOTION_TAGS = {
-  h1: motion.h1,
-  h2: motion.h2,
-  h3: motion.h3,
-  p: motion.p,
-  span: motion.span,
-  div: motion.div,
-} as const satisfies Record<string, ElementType>;
 
 const resolveEase = (
   ease: TransitionValue["ease"],
@@ -95,30 +89,31 @@ export default function TextEmerge({
   staggerFrom = "start",
   transition = DEFAULT_TRANSITION,
   once = true,
+  play = "scroll",
 }: TextEmergeProps) {
-  const reduceMotion = useReducedMotion();
+  const mounted = useMounted();
   const words = useMemo(() => text.split(/\s+/).filter(Boolean), [text]);
   const duration = transition.duration ?? DEFAULT_TRANSITION.duration!;
   const baseDelay = transition.delay ?? DEFAULT_TRANSITION.delay!;
   const staggerEach =
     transition.staggerChildren ?? DEFAULT_TRANSITION.staggerChildren!;
-  const skip = reduceMotion === true;
   const delays = useMemo(
     () =>
       buildStaggerDelays(
         words.length,
-        skip ? 0 : staggerEach,
+        staggerEach,
         staggerFrom,
         baseDelay,
       ),
-    [words.length, skip, staggerFrom, baseDelay, staggerEach],
+    [words.length, staggerFrom, baseDelay, staggerEach],
   );
 
-  const MotionTag = MOTION_TAGS[Tag];
   const viewport = { once, amount: 0.25, margin: "0px 0px -8% 0px" as const };
+  const hidden = { opacity: 0, transform: "translateY(8px)" };
+  const shown = { opacity: 1, transform: "translateY(0px)" };
 
   return (
-    <MotionTag
+    <Tag
       id={id}
       className={className}
       style={{ margin: 0, ...(color ? { color } : null) } satisfies CSSProperties}
@@ -129,12 +124,13 @@ export default function TextEmerge({
           key={`${word}-${index}`}
           className="mr-[0.3em] inline-block last:mr-0"
           aria-hidden
-          initial={skip ? false : { opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={hidden}
+          animate={play === "enter" ? shown : undefined}
+          whileInView={play === "scroll" && mounted ? shown : undefined}
           viewport={viewport}
           transition={{
             type: "tween",
-            duration: skip ? 0.01 : duration,
+            duration,
             delay: delays[index] ?? 0,
             ease: resolveEase(transition.ease),
           }}
@@ -142,7 +138,7 @@ export default function TextEmerge({
           {word}
         </motion.span>
       ))}
-    </MotionTag>
+    </Tag>
   );
 }
 

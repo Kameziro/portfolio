@@ -1,17 +1,14 @@
 "use client";
 
 /**
- * Hero ambient — slow satin-like mesh (CSS only).
- * Replaces Silk/Three.js; swap for originkit satin-flow when quota resets.
+ * Hero ambient — CRT starfield + dither, no blur orbs.
  */
 export function HeroAmbient() {
   return (
     <div className="hero-ambient" aria-hidden>
-      <div className="hero-ambient__base" />
-      <div className="hero-ambient__orb hero-ambient__orb--amber" />
-      <div className="hero-ambient__orb hero-ambient__orb--olive" />
-      <div className="hero-ambient__orb hero-ambient__orb--warm" />
-      <div className="hero-ambient__sheen" />
+      <div className="hero-ambient__stars" />
+      <div className="hero-ambient__dither" />
+      <div className="hero-ambient__scan" />
       <div className="hero-ambient__vignette" />
     </div>
   );

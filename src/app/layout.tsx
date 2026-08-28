@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
-import { Fraunces, Figtree } from "next/font/google";
+import { Pixelify_Sans, Press_Start_2P, VT323 } from "next/font/google";
 import { pt } from "@/content/pt";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const display = Fraunces({
-  variable: "--font-display",
+const pixel = Press_Start_2P({
+  variable: "--font-pixel",
   subsets: ["latin"],
-  axes: ["SOFT", "WONK", "opsz"],
+  weight: "400",
 });
 
-const sans = Figtree({
+const sans = Pixelify_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
+});
+
+const mono = VT323({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -28,9 +34,9 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={cn("dark h-full", display.variable, sans.variable)}
+      className={cn("dark h-full", pixel.variable, sans.variable, mono.variable)}
     >
-      <body className="min-h-full bg-background font-sans text-foreground antialiased">
+      <body className="min-h-full bg-background font-sans text-foreground">
         {children}
       </body>
     </html>

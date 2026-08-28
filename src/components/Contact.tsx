@@ -19,23 +19,26 @@ export function Contact({ copy }: Props) {
     <section
       id="contato"
       aria-labelledby="contato-title"
-      className="mx-auto max-w-6xl border-t border-foreground/15 px-6 py-28 md:px-10 md:py-36"
+      className="mx-auto max-w-6xl border-t-2 border-foreground/40 px-6 py-28 md:px-10 md:py-36"
     >
       <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
         <ScrollEmerge revealLine>
-          <h2 id="contato-title" className="sf-label text-lg">
+          <h2 id="contato-title" className="sf-label">
             {copy.contact.title}
           </h2>
           <TextEmerge
             text={copy.contact.lead}
             as="p"
-            className="mt-4 max-w-sm font-display text-xl leading-snug text-foreground md:text-2xl"
+            className="pixel-title mt-4 max-w-sm text-xl text-foreground md:text-2xl"
+            transition={{ duration: 0.28, staggerChildren: 0.04 }}
           />
 
           <form onSubmit={onSubmit} className="mt-12 space-y-0" noValidate>
-            <p className="mb-8 text-sm text-muted-foreground">{copy.contact.form.note}</p>
+            <p className="mb-8 text-base text-muted-foreground">
+              {copy.contact.form.note}
+            </p>
 
-            <label className="block border-b border-foreground/40 py-3">
+            <label className="block border-b-2 border-foreground/40 py-3">
               <span className="sf-label">{copy.contact.form.name}*</span>
               <input
                 name="name"
@@ -44,7 +47,7 @@ export function Contact({ copy }: Props) {
                 aria-label={copy.contact.form.name}
               />
             </label>
-            <label className="block border-b border-foreground/40 py-3">
+            <label className="block border-b-2 border-foreground/40 py-3">
               <span className="sf-label">{copy.contact.form.email}*</span>
               <input
                 name="email"
@@ -54,7 +57,7 @@ export function Contact({ copy }: Props) {
                 aria-label={copy.contact.form.email}
               />
             </label>
-            <label className="block border-b border-foreground/40 py-3">
+            <label className="block border-b-2 border-foreground/40 py-3">
               <span className="sf-label">{copy.contact.form.message}*</span>
               <textarea
                 name="message"
@@ -64,52 +67,62 @@ export function Contact({ copy }: Props) {
               />
             </label>
 
-            <button
-              type="submit"
-              className="mt-8 font-display text-base text-foreground underline-offset-4 transition-opacity hover:underline"
-            >
+            <button type="submit" className="pixel-btn mt-8">
               {copy.contact.form.submit}
             </button>
 
             {submitted ? (
-              <p className="mt-4 font-display text-sm text-muted-foreground" role="status">
+              <p
+                className="mt-4 font-display text-[8px] leading-relaxed text-muted-foreground"
+                role="status"
+              >
                 Formulário só UI — use e-mail ou LinkedIn.
               </p>
             ) : null}
           </form>
         </ScrollEmerge>
 
-        <ScrollEmerge delay={0.12} variant="item">
-          <h3 className="sf-label text-lg">Links</h3>
-          <ul className="mt-8 list-none space-y-0 border-t border-foreground/25 p-0">
-            <li className="border-b border-foreground/25">
+        <ScrollEmerge delay={0.08} variant="item">
+          <h3 className="sf-label">Links</h3>
+          <ul className="pixel-frame mt-8 list-none space-y-0 bg-card p-0">
+            <li className="border-b-2 border-foreground/40">
               <a
                 href={`mailto:${copy.contact.email}`}
-                className="flex items-center justify-between py-4 font-display text-base text-foreground transition-opacity hover:opacity-70"
+                className="pixel-link flex items-center justify-between px-4 py-4 text-foreground"
               >
-                <span>E-mail</span>
-                <span className="text-sm text-muted-foreground">{copy.contact.email}</span>
+                <span className="font-display text-[8px] uppercase">E-mail</span>
+                <span className="font-mono text-base text-muted-foreground">
+                  {copy.contact.email}
+                </span>
               </a>
             </li>
-            <li className="border-b border-foreground/25">
+            <li className="border-b-2 border-foreground/40">
               <a
                 href={copy.contact.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-between py-4 font-display text-base text-foreground transition-opacity hover:opacity-70"
+                className="pixel-link flex items-center justify-between px-4 py-4 text-foreground"
               >
-                <span>{copy.contact.linkedinLabel}</span>
-                <span aria-hidden>↗</span>
+                <span className="font-display text-[8px] uppercase">
+                  {copy.contact.linkedinLabel}
+                </span>
+                <span className="font-display text-[8px] text-pixel-gold" aria-hidden>
+                  {">"}
+                </span>
               </a>
             </li>
-            <li className="border-b border-foreground/25">
+            <li>
               <a
                 href={copy.contact.pdfHref}
                 download
-                className="flex items-center justify-between py-4 font-display text-base text-foreground transition-opacity hover:opacity-70"
+                className="pixel-link flex items-center justify-between px-4 py-4 text-foreground"
               >
-                <span>{copy.contact.pdfLabel}</span>
-                <span aria-hidden>↓</span>
+                <span className="font-display text-[8px] uppercase">
+                  {copy.contact.pdfLabel}
+                </span>
+                <span className="font-display text-[8px] text-pixel-gold" aria-hidden>
+                  v
+                </span>
               </a>
             </li>
           </ul>

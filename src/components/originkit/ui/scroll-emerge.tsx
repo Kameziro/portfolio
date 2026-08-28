@@ -1,12 +1,12 @@
 "use client";
 
 /**
- * Scroll emerge — fade + slide + optional reveal line.
- * Below-fold content starts hidden; animates once in view.
+ * Scroll emerge — short fade + 8px travel. Pixel HUD, not editorial slide.
  */
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
+import { useMounted } from "@/hooks/use-mounted";
 
 type Variant = "section" | "item";
 
@@ -15,13 +15,13 @@ type Props = {
   className?: string;
   delay?: number;
   once?: boolean;
-  /** section = larger travel; item = list rows */
+  /** section = slightly longer; item = list rows */
   variant?: Variant;
-  /** Draw a short rule before content (editorial) */
+  /** Draw a short gold rule before content */
   revealLine?: boolean;
 };
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+const EASE = [0.23, 1, 0.32, 1] as const;
 
 export default function ScrollEmerge({
   children,
@@ -31,33 +31,32 @@ export default function ScrollEmerge({
   variant = "section",
   revealLine = false,
 }: Props) {
-  const reduce = useReducedMotion();
-  const travel = variant === "section" ? 52 : 28;
-
-  if (reduce) {
-    return <div className={className}>{children}</div>;
-  }
+  const mounted = useMounted();
+  const duration = variant === "section" ? 0.28 : 0.22;
+  const shown = { opacity: 1, transform: "translateY(0px)" };
 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: travel }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, transform: "translateY(8px)" }}
+      whileInView={mounted ? shown : undefined}
       viewport={{ once, amount: 0.18, margin: "0px 0px -6% 0px" }}
       transition={{
         type: "tween",
-        duration: variant === "section" ? 0.75 : 0.55,
+        duration,
         delay,
         ease: EASE,
       }}
     >
       {revealLine ? (
         <motion.span
-          className="mb-8 block h-px w-14 origin-left bg-foreground/30"
-          initial={{ scaleX: 0, opacity: 0 }}
-          whileInView={{ scaleX: 1, opacity: 1 }}
+          className="pixel-rule mb-8 block"
+          initial={{ clipPath: "inset(0 100% 0 0)", opacity: 1 }}
+          whileInView={
+            mounted ? { clipPath: "inset(0 0 0 0)", opacity: 1 } : undefined
+          }
           viewport={{ once, amount: 0.5 }}
-          transition={{ duration: 0.6, delay: delay + 0.05, ease: EASE }}
+          transition={{ duration: 0.2, delay: delay + 0.04, ease: EASE }}
           aria-hidden
         />
       ) : null}

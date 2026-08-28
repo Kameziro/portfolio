@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 
 type Props = { copy: PortfolioCopy };
 
-/** Unseen Studio header — fixed, blurs on scroll */
 export function SiteHeader({ copy }: Props) {
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,25 +27,25 @@ export function SiteHeader({ copy }: Props) {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-40 transition-[background-color,backdrop-filter,border-color] duration-500 ease-out",
+        "fixed inset-x-0 top-0 z-40 transition-[background-color,border-color] duration-200 ease-out",
         scrolled
-          ? "border-b border-foreground/10 bg-background/75 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
+          ? "border-b-2 border-foreground bg-background"
+          : "border-b-2 border-transparent bg-transparent",
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 md:px-10 md:py-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10">
         <Link
           href="#topo"
-          className="font-display text-base lowercase tracking-tight text-foreground md:text-lg"
+          className="font-display pixel-link text-[10px] uppercase text-foreground"
         >
-          {copy.hero.name.toLowerCase()}
+          {copy.hero.name}
         </Link>
-        <nav aria-label="Seções" className="hidden items-center gap-7 sm:flex">
+        <nav aria-label="Seções" className="hidden items-center gap-6 sm:flex">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[0.75rem] text-foreground/75 transition-colors duration-300 hover:text-foreground"
+              className="font-display pixel-link pixel-nav text-[10px] uppercase text-muted-foreground"
             >
               {link.label}
             </a>

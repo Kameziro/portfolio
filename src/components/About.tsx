@@ -11,27 +11,20 @@ export function About({ copy }: Props) {
     <section
       id="sobre"
       aria-labelledby="sobre-title"
-      className="mx-auto max-w-6xl border-t border-foreground/15 px-6 py-28 md:px-10 md:py-36"
+      className="mx-auto max-w-6xl border-t-2 border-foreground/40 px-6 py-28 md:px-10 md:py-36"
     >
       <ScrollEmerge revealLine>
-        <p className="text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
-          {copy.about.title}
-        </p>
+        <p className="pixel-kicker">{copy.about.title}</p>
         <TextEmerge
           id="sobre-title"
           text={copy.about.fullName}
           as="h2"
-          className="mt-5 max-w-2xl font-display text-3xl leading-tight tracking-tight text-foreground md:text-5xl"
+          className="pixel-title mt-5 max-w-2xl text-2xl text-foreground md:text-4xl"
           staggerFrom="start"
         />
-        <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+        <div className="mt-10 max-w-2xl space-y-5 text-lg leading-relaxed text-muted-foreground md:text-xl">
           {copy.about.body.map((paragraph) => (
-            <TextEmerge
-              key={paragraph.slice(0, 24)}
-              text={paragraph}
-              as="p"
-              className="text-base leading-relaxed text-muted-foreground md:text-lg"
-            />
+            <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}
         </div>
       </ScrollEmerge>

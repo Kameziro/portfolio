@@ -84,7 +84,7 @@ export const pt = {
     title: "Contato",
     lead: "Se quiser conversar sobre engenharia, mobile ou web, estou por aqui.",
     email: "cleber.neto2003@gmail.com",
-    linkedin: "https://www.linkedin.com/in/cleber-neto-dev",
+    linkedin: "https://www.linkedin.com/in/cleber-neto-dev/",
     linkedinLabel: "LinkedIn",
     pdfHref: "/curriculo-cleber-neto.pdf",
     pdfLabel: "Baixar CV (PDF)",
