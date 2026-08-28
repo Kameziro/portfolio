@@ -22,7 +22,7 @@ export function Contact({ copy }: Props) {
       className="mx-auto max-w-6xl border-t border-foreground/15 px-6 py-28 md:px-10 md:py-36"
     >
       <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-        <ScrollEmerge>
+        <ScrollEmerge revealLine>
           <h2 id="contato-title" className="sf-label text-lg">
             {copy.contact.title}
           </h2>
@@ -79,7 +79,7 @@ export function Contact({ copy }: Props) {
           </form>
         </ScrollEmerge>
 
-        <ScrollEmerge delay={0.08}>
+        <ScrollEmerge delay={0.12} variant="item">
           <h3 className="sf-label text-lg">Links</h3>
           <ul className="mt-8 list-none space-y-0 border-t border-foreground/25 p-0">
             <li className="border-b border-foreground/25">

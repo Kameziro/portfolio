@@ -13,7 +13,7 @@ export function About({ copy }: Props) {
       aria-labelledby="sobre-title"
       className="mx-auto max-w-6xl border-t border-foreground/15 px-6 py-28 md:px-10 md:py-36"
     >
-      <ScrollEmerge>
+      <ScrollEmerge revealLine>
         <p className="text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
           {copy.about.title}
         </p>

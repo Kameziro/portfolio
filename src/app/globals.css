@@ -76,6 +76,11 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+[id] {
+  scroll-margin-top: 5.5rem;
 }
 
 body {
@@ -90,6 +95,46 @@ body {
 ::selection {
   background: var(--foreground);
   color: var(--background);
+}
+
+/* Editorial scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(196, 168, 118, 0.35) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(196, 168, 118, 0.35);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 168, 118, 0.55);
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 2px;
+  transform-origin: 0 50%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(196, 168, 118, 0.55) 0%,
+    rgba(245, 245, 240, 0.95) 55%,
+    rgba(196, 168, 118, 0.45) 100%
+  );
 }
 
 .font-display {

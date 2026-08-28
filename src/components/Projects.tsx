@@ -14,7 +14,7 @@ export function Projects({ copy }: Props) {
       aria-labelledby="projetos-title"
       className="mx-auto max-w-6xl px-6 py-28 md:px-10 md:py-36"
     >
-      <ScrollEmerge>
+      <ScrollEmerge revealLine>
         <div className="flex flex-col items-center text-center">
           <p
             className="text-[0.7rem] font-medium"
@@ -38,7 +38,7 @@ export function Projects({ copy }: Props) {
             key={project.name}
             className="border-b border-dashed border-foreground/35"
           >
-            <ScrollEmerge delay={index * 0.08}>
+            <ScrollEmerge delay={index * 0.1} variant="item">
               <article className="grid items-start gap-6 py-12 md:grid-cols-[4.5rem_minmax(7.5rem,11rem)_minmax(0,1fr)] md:gap-8 lg:grid-cols-[4.5rem_minmax(9rem,13rem)_minmax(0,1fr)_minmax(0,12rem)] lg:gap-10">
                 <p className="font-mono text-[0.7rem] tracking-wide text-muted-foreground">
                   # {String(index + 1).padStart(2, "0")}

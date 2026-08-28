@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Text Emerge — word stagger on scroll (opacity + y only, no filter).
+ * Text Emerge — word stagger on scroll (opacity + y).
  */
 
 import { motion, useReducedMotion, type Transition } from "motion/react";
@@ -27,13 +27,13 @@ type TextEmergeProps = {
   once?: boolean;
 };
 
-const EASE_OUT = [0.215, 0.61, 0.355, 1] as const;
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 const DEFAULT_TRANSITION: TransitionValue = {
-  duration: 0.4,
+  duration: 0.5,
   delay: 0,
   ease: "easeOut",
-  staggerChildren: 0.05,
+  staggerChildren: 0.045,
 };
 
 const MOTION_TAGS = {
@@ -115,6 +115,7 @@ export default function TextEmerge({
   );
 
   const MotionTag = MOTION_TAGS[Tag];
+  const viewport = { once, amount: 0.25, margin: "0px 0px -8% 0px" as const };
 
   return (
     <MotionTag
@@ -128,9 +129,9 @@ export default function TextEmerge({
           key={`${word}-${index}`}
           className="mr-[0.3em] inline-block last:mr-0"
           aria-hidden
-          initial={skip ? false : { opacity: 1, y: 16 }}
+          initial={skip ? false : { opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once, amount: 0.2 }}
+          viewport={viewport}
           transition={{
             type: "tween",
             duration: skip ? 0.01 : duration,

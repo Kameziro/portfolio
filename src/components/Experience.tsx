@@ -13,7 +13,7 @@ export function Experience({ copy }: Props) {
       aria-labelledby="experiencia-title"
       className="mx-auto max-w-6xl border-t border-foreground/15 px-6 py-28 md:px-10 md:py-36"
     >
-      <ScrollEmerge>
+      <ScrollEmerge revealLine>
         <p className="text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
           {copy.experience.title}
         </p>
@@ -31,7 +31,7 @@ export function Experience({ copy }: Props) {
             key={`${role.title}-${role.period}`}
             className="border-b border-dotted border-foreground/25"
           >
-            <ScrollEmerge delay={index * 0.07}>
+            <ScrollEmerge delay={index * 0.09} variant="item">
               <div className="grid gap-4 py-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:gap-12 md:py-12">
                 <div>
                   <h3 className="font-display text-2xl tracking-tight text-foreground md:text-3xl">

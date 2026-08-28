@@ -1,12 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import type { PortfolioCopy } from "@/content/pt";
+import { cn } from "@/lib/utils";
 
 type Props = { copy: PortfolioCopy };
 
-/** Mobbin → Unseen Studio header: serif wordmark left, sparse nav right */
+/** Unseen Studio header — fixed, blurs on scroll */
 export function SiteHeader({ copy }: Props) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const links = [
     { href: "#sobre", label: copy.nav.about },
     { href: "#projetos", label: copy.nav.projects },
@@ -15,8 +26,15 @@ export function SiteHeader({ copy }: Props) {
   ];
 
   return (
-    <header className="absolute inset-x-0 top-0 z-30">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 md:px-10">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-40 transition-[background-color,backdrop-filter,border-color] duration-500 ease-out",
+        scrolled
+          ? "border-b border-foreground/10 bg-background/75 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 md:px-10 md:py-6">
         <Link
           href="#topo"
           className="font-display text-base lowercase tracking-tight text-foreground md:text-lg"
@@ -28,7 +46,7 @@ export function SiteHeader({ copy }: Props) {
             <a
               key={link.href}
               href={link.href}
-              className="text-[0.75rem] text-foreground/80 transition-opacity hover:opacity-100"
+              className="text-[0.75rem] text-foreground/75 transition-colors duration-300 hover:text-foreground"
             >
               {link.label}
             </a>
