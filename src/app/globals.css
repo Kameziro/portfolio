@@ -132,20 +132,121 @@ body {
   color: var(--foreground);
 }
 
-.silk-stage,
-[data-ok-canvas],
-.ok-fullscreen-canvas {
+/* Hero ambient mesh — editorial amber/olive (replaces Silk) */
+.hero-ambient {
   position: absolute;
   inset: 0;
-  pointer-events: none;
+  overflow: hidden;
+  background: var(--background);
 }
 
-.silk-stage canvas,
-[data-ok-canvas] canvas,
-.ok-fullscreen-canvas canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
+.hero-ambient__base {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, rgba(196, 168, 118, 0.14), transparent 58%),
+    radial-gradient(ellipse 60% 45% at 85% 65%, rgba(92, 99, 68, 0.12), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 12% 72%, rgba(139, 115, 85, 0.1), transparent 50%);
+}
+
+.hero-ambient__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  will-change: transform;
+}
+
+.hero-ambient__orb--amber {
+  width: min(62vmax, 720px);
+  height: min(62vmax, 720px);
+  left: -8%;
+  top: 8%;
+  background: radial-gradient(circle, rgba(196, 168, 118, 0.42) 0%, transparent 68%);
+  animation: hero-drift-amber 32s ease-in-out infinite alternate;
+}
+
+.hero-ambient__orb--olive {
+  width: min(50vmax, 580px);
+  height: min(50vmax, 580px);
+  right: -6%;
+  top: 28%;
+  background: radial-gradient(circle, rgba(92, 99, 68, 0.38) 0%, transparent 70%);
+  animation: hero-drift-olive 26s ease-in-out infinite alternate-reverse;
+}
+
+.hero-ambient__orb--warm {
+  width: min(44vmax, 520px);
+  height: min(44vmax, 520px);
+  left: 28%;
+  bottom: -12%;
+  background: radial-gradient(circle, rgba(74, 58, 42, 0.45) 0%, transparent 72%);
+  animation: hero-drift-warm 38s ease-in-out infinite alternate;
+}
+
+.hero-ambient__sheen {
+  position: absolute;
+  inset: -40% -20%;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(245, 245, 240, 0.04) 48%,
+    rgba(196, 168, 118, 0.07) 50%,
+    rgba(245, 245, 240, 0.03) 52%,
+    transparent 62%
+  );
+  animation: hero-sheen 18s ease-in-out infinite;
+}
+
+.hero-ambient__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 90% 75% at 50% 45%, transparent 35%, rgba(12, 12, 12, 0.75) 100%);
+}
+
+@keyframes hero-drift-amber {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(6%, 8%) scale(1.08);
+  }
+}
+
+@keyframes hero-drift-olive {
+  from {
+    transform: translate(0, 0) scale(1.02);
+  }
+  to {
+    transform: translate(-7%, 5%) scale(0.96);
+  }
+}
+
+@keyframes hero-drift-warm {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(4%, -6%) scale(1.06);
+  }
+}
+
+@keyframes hero-sheen {
+  0%,
+  100% {
+    transform: translateX(-8%) rotate(0deg);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateX(8%) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ambient__orb,
+  .hero-ambient__sheen {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

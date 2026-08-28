@@ -1,20 +1,14 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import FocusReveal from "@/components/originkit/ui/focus-reveal";
 import TextEmerge from "@/components/originkit/ui/text-emerge";
+import { HeroAmbient } from "@/components/HeroAmbient";
 import type { PortfolioCopy } from "@/content/pt";
-
-const Silk = dynamic(() => import("@/components/Silk"), {
-  ssr: false,
-  loading: () => null,
-});
 
 type Props = { copy: PortfolioCopy };
 
 /**
- * Mobbin hero composition + Origin Kit Focus Reveal / Text Emerge
- * (Focus Reveal delivered via originkit add hero-13 companion)
+ * Mobbin hero + Origin Kit Focus Reveal / Text Emerge + CSS ambient mesh
  */
 export function Hero({ copy }: Props) {
   return (
@@ -27,16 +21,8 @@ export function Hero({ copy }: Props) {
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
-        <div className="absolute inset-0 opacity-55">
-          <Silk
-            speed={2.8}
-            scale={1.05}
-            color="#2a2418"
-            noiseIntensity={1.3}
-            rotation={0.05}
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/20 to-background" />
+        <HeroAmbient />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/15 to-background" />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col items-center justify-center px-6 text-center md:px-10">
