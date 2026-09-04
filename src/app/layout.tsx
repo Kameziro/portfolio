@@ -37,6 +37,9 @@ export default function RootLayout({
       className={cn("dark h-full", pixel.variable, sans.variable, mono.variable)}
     >
       <body className="min-h-full bg-background font-sans text-foreground">
+        <noscript>
+          <style>{`.pixel-reveal,.pixel-reveal-item{opacity:1;transform:none}.pixel-reveal>.pixel-rule{transform:none}`}</style>
+        </noscript>
         {children}
       </body>
     </html>

@@ -8,12 +8,14 @@ export const pt = {
     about: "Sobre",
     projects: "Projetos",
     experience: "Experiência",
-    contact: "Contato",
+    open: "Abrir seções",
+    close: "Fechar seções",
   },
   hero: {
     name: "Cleber Neto",
     role: "Engenheiro de Software Júnior · Full Stack Mobile e Web",
     lead: "Produtos mobile e web que funcionam de verdade — offline, em campo e em escala governamental.",
+    cta: "Ver projetos",
   },
   about: {
     title: "Sobre",
@@ -48,6 +50,7 @@ export const pt = {
   },
   experience: {
     title: "Experiência",
+    heading: "Trajetória",
     roles: [
       {
         title: "Engenheiro de Software Júnior",
@@ -81,23 +84,16 @@ export const pt = {
     },
   },
   contact: {
-    title: "Contato",
-    lead: "Se quiser conversar sobre engenharia, mobile ou web, estou por aqui.",
     email: "cleber.neto2003@gmail.com",
+    emailLabel: "E-mail",
     linkedin: "https://www.linkedin.com/in/cleber-neto-dev/",
     linkedinLabel: "LinkedIn",
     pdfHref: "/curriculo-cleber-neto.pdf",
     pdfLabel: "Baixar CV (PDF)",
-    form: {
-      name: "Nome",
-      email: "E-mail",
-      message: "Mensagem",
-      submit: "Enviar",
-      note: "Formulário em preparação — por enquanto use o e-mail ou o LinkedIn.",
-    },
   },
   footer: {
     legal: "Cleber Alves de Oliveira Neto",
+    year: "2026",
   },
 } as const;
 

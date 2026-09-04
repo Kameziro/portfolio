@@ -1,5 +1,3 @@
-"use client";
-
 /**
  * Hero ambient — CRT starfield + dither, no blur orbs.
  */
