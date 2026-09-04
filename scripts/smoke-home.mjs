@@ -23,6 +23,7 @@ async function main() {
     "curriculo-cleber-neto.pdf",
     "cleber.neto2003@gmail.com",
     "linkedin.com/in/cleber-neto-dev",
+    "msqualifica.ms.gov.br",
   ];
   const mustNotInclude = ["Cinetopia", "Contato"];
 

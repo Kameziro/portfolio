@@ -1,0 +1,4 @@
+*.sh text eol=lf
+*.cron text eol=lf
+deploy/vps/*.conf text eol=lf
+.github/workflows/*.yml text eol=lf

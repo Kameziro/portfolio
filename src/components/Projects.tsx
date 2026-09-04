@@ -3,6 +3,38 @@ import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
 
+function ProjectArt({
+  src,
+  alt,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  const className = "object-contain p-8 md:p-10";
+  if (src.endsWith(".svg")) {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={`absolute inset-0 h-full w-full ${className}`}
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes="(max-width: 768px) 92vw, 44vw"
+      className={className}
+      priority={priority}
+    />
+  );
+}
+
 export function Projects({ copy }: Props) {
   return (
     <section
@@ -26,36 +58,72 @@ export function Projects({ copy }: Props) {
       </div>
 
       <ul className="mt-16 grid list-none grid-cols-1 gap-12 p-0 md:grid-cols-2 md:gap-8 lg:gap-12">
-        {copy.projects.items.map((project, index) => (
-          <li key={project.name}>
-            <article className="pixel-stage pixel-reveal-item">
-              <div className="pixel-frame pixel-stage-art relative aspect-[5/4] w-full overflow-hidden bg-card">
-                <Image
-                  src={project.logo}
-                  alt={project.logoAlt}
-                  fill
-                  sizes="(max-width: 768px) 92vw, 44vw"
-                  className="object-contain p-8 md:p-10"
-                  priority={index === 0}
-                />
-              </div>
+        {copy.projects.items.map((project, index) => {
+          const href = "href" in project ? project.href : undefined;
 
-              <p className="mt-6 font-mono text-lg tracking-wide text-pixel-cyan">
-                #{String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="pixel-title mt-3 text-3xl text-foreground sm:text-4xl lg:text-5xl">
-                {project.name}
-              </h3>
-              <p className="pixel-kicker mt-4">{project.line}</p>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                {project.summary}
-              </p>
-              <p className="mt-4 font-mono text-base text-muted-foreground">
-                {project.stack}
-              </p>
-            </article>
-          </li>
-        ))}
+          return (
+            <li key={project.name}>
+              <article className="pixel-stage pixel-reveal-item">
+                {href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="pixel-link block"
+                    aria-label={`${project.name} (abre em nova aba)`}
+                  >
+                    <div className="pixel-frame pixel-stage-art relative aspect-[5/4] w-full overflow-hidden bg-card">
+                      <ProjectArt
+                        src={project.logo}
+                        alt=""
+                        priority={index === 0}
+                      />
+                    </div>
+                  </a>
+                ) : (
+                  <div className="pixel-frame pixel-stage-art relative aspect-[5/4] w-full overflow-hidden bg-card">
+                    <ProjectArt
+                      src={project.logo}
+                      alt={project.logoAlt}
+                      priority={index === 0}
+                    />
+                  </div>
+                )}
+
+                <p className="mt-6 font-mono text-lg tracking-wide text-pixel-cyan">
+                  #{String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="pixel-title mt-3 text-3xl text-foreground sm:text-4xl lg:text-5xl">
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="pixel-link text-inherit"
+                    >
+                      {project.name}
+                      <span
+                        className="ml-3 align-middle font-display text-[10px] text-pixel-cyan"
+                        aria-hidden
+                      >
+                        {">"}
+                      </span>
+                    </a>
+                  ) : (
+                    project.name
+                  )}
+                </h3>
+                <p className="pixel-kicker mt-4">{project.line}</p>
+                <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {project.summary}
+                </p>
+                <p className="mt-4 font-mono text-base text-muted-foreground">
+                  {project.stack}
+                </p>
+              </article>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
