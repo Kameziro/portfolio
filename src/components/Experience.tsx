@@ -2,7 +2,58 @@ import type { PortfolioCopy } from "@/content/pt";
 
 type Props = { copy: PortfolioCopy };
 
+type Row = {
+  title: string;
+  org: string;
+  period: string;
+  summary?: string;
+};
+
+const GROUP_GRID = "md:grid-cols-[minmax(0,1fr)_minmax(0,3fr)]";
+const ROW_GRID = "md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,0.75fr)]";
+
+function ExperienceGroup({
+  label,
+  rows,
+  periodClass,
+}: {
+  label: string;
+  rows: readonly Row[];
+  periodClass: string;
+}) {
+  return (
+    <div
+      className={`pixel-reveal-item grid gap-6 border-b-2 border-foreground py-10 md:gap-8 ${GROUP_GRID}`}
+    >
+      <h3 className="pixel-title text-2xl text-foreground md:text-3xl">{label}</h3>
+      <ol className="list-none p-0">
+        {rows.map((row) => (
+          <li
+            key={`${row.title}-${row.period}`}
+            className={`grid gap-2 border-t-2 border-foreground/20 py-5 first:border-t-0 first:pt-0 last:pb-0 md:gap-8 ${ROW_GRID}`}
+          >
+            <div>
+              <p className="pixel-title text-lg text-foreground">{row.title}</p>
+              {row.summary ? (
+                <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                  {row.summary}
+                </p>
+              ) : null}
+            </div>
+            <p className="text-base text-muted-foreground">{row.org}</p>
+            <p className={`font-mono text-lg md:text-right ${periodClass}`}>
+              {row.period}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function Experience({ copy }: Props) {
+  const { experience } = copy;
+
   return (
     <section
       aria-labelledby="experiencia-title"
@@ -10,61 +61,38 @@ export function Experience({ copy }: Props) {
     >
       <div id="experiencia" className="pixel-anchor pixel-reveal">
         <span className="pixel-rule mb-8 block" aria-hidden />
-        <p className="pixel-kicker">{copy.experience.title}</p>
+        <p className="pixel-kicker">{experience.title}</p>
         <h2
           id="experiencia-title"
-          className="pixel-title mt-5 text-xl text-foreground md:text-2xl"
+          className="pixel-title mt-5 text-3xl text-foreground md:text-5xl"
         >
-          {copy.experience.heading}
+          {experience.heading}
         </h2>
       </div>
 
-      <ol className="mt-16 list-none space-y-0 border-t-2 border-foreground/40 p-0">
-        {copy.experience.roles.map((role) => (
-          <li
-            key={`${role.title}-${role.period}`}
-            className="border-b-2 border-foreground/40"
-          >
-            <div className="pixel-reveal-item grid gap-4 py-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:gap-12 md:py-12">
-              <div>
-                <h3 className="pixel-title text-xl text-foreground md:text-2xl">
-                  {role.title}
-                </h3>
-                <p className="pixel-kicker mt-3">{role.org}</p>
-              </div>
-              <div>
-                <p className="font-mono text-lg text-pixel-cyan">{role.period}</p>
-                <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-lg">
-                  {role.summary}
-                </p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ol>
+      <div
+        aria-hidden
+        className={`mt-16 hidden border-b-2 border-foreground pb-3 font-mono text-lg uppercase text-muted-foreground md:grid md:gap-8 ${GROUP_GRID}`}
+      >
+        <span />
+        <div className={`grid gap-8 ${ROW_GRID}`}>
+          <span>{experience.columns.role}</span>
+          <span>{experience.columns.org}</span>
+          <span className="text-right">{experience.columns.period}</span>
+        </div>
+      </div>
 
-      <div className="pixel-reveal mt-16">
-        <h3 className="font-display text-[8px] uppercase text-foreground sm:text-[10px]">
-          {copy.experience.education.title}
-        </h3>
-        <ul className="mt-8 list-none space-y-0 border-t-2 border-foreground/40 p-0">
-          {copy.experience.education.items.map((item) => (
-            <li
-              key={item.title}
-              className="border-b-2 border-foreground/40 py-6"
-            >
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-                <div>
-                  <p className="pixel-title text-lg text-foreground">{item.title}</p>
-                  <p className="mt-1 text-base text-muted-foreground">{item.org}</p>
-                </div>
-                <p className="shrink-0 font-mono text-lg text-pixel-magenta">
-                  {item.period}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-10 border-t-2 border-foreground md:mt-0 md:border-t-0">
+        <ExperienceGroup
+          label={experience.rolesLabel}
+          rows={experience.roles}
+          periodClass="text-pixel-accent"
+        />
+        <ExperienceGroup
+          label={experience.education.title}
+          rows={experience.education.items}
+          periodClass="text-foreground"
+        />
       </div>
     </section>
   );

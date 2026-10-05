@@ -1,5 +1,6 @@
 import { About } from "@/components/About";
-import { ContactLinks } from "@/components/Contact";
+import { BootScreen } from "@/components/BootScreen";
+import { Contact, SiteFooter } from "@/components/Contact";
 import { Experience } from "@/components/Experience";
 import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
@@ -13,6 +14,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
+      <BootScreen copy={copy} />
       <ScrollProgress />
       <RevealObserver />
       <SiteHeader copy={copy} />
@@ -21,16 +23,9 @@ export default function Home() {
         <About copy={copy} />
         <Projects copy={copy} />
         <Experience copy={copy} />
+        <Contact copy={copy} />
       </main>
-      <footer className="border-t-2 border-foreground px-6 py-8 md:px-10">
-        <div className="mx-auto max-w-6xl">
-          <ContactLinks copy={copy} />
-          <div className="mt-8 flex items-center justify-between gap-4 text-sm text-muted-foreground">
-            <p className="pixel-title text-sm text-foreground">{copy.footer.legal}</p>
-            <p className="font-mono text-lg text-pixel-cyan">© {copy.footer.year}</p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter copy={copy} />
     </div>
   );
 }
