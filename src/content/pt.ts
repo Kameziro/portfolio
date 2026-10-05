@@ -16,6 +16,11 @@ export const pt = {
     role: "Engenheiro de Software Júnior · Full Stack Mobile e Web",
     lead: "Produtos mobile e web que funcionam de verdade — offline, em campo e em escala governamental.",
     cta: "Ver projetos",
+    boot: {
+      label: "Portfólio",
+      build: "build 2026.10 · pt-BR",
+      legal: "© 2026 Cleber Alves de Oliveira Neto",
+    },
   },
   about: {
     title: "Sobre",
@@ -27,6 +32,8 @@ export const pt = {
   },
   projects: {
     title: "Projetos",
+    caption: "Trabalho real — em campo e em produção.",
+    privateLabel: "Sem link público",
     items: [
       {
         name: "AOR",
@@ -52,6 +59,12 @@ export const pt = {
   experience: {
     title: "Experiência",
     heading: "Trajetória",
+    rolesLabel: "Trabalho",
+    columns: {
+      role: "Cargo",
+      org: "Organização",
+      period: "Período",
+    },
     roles: [
       {
         title: "Engenheiro de Software Júnior",
@@ -85,6 +98,10 @@ export const pt = {
     },
   },
   contact: {
+    kicker: "Fale comigo",
+    headline: "Vamos construir algo juntos.",
+    copyLabel: "Copiar e-mail",
+    copiedLabel: "E-mail copiado",
     email: "cleber.neto2003@gmail.com",
     emailLabel: "E-mail",
     linkedin: "https://www.linkedin.com/in/cleber-neto-dev/",
@@ -95,6 +112,7 @@ export const pt = {
   footer: {
     legal: "Cleber Alves de Oliveira Neto",
     year: "2026",
+    backToTop: "Voltar ao topo",
   },
 } as const;
 

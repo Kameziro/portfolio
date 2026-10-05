@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={cn("dark h-full", pixel.variable, sans.variable, mono.variable)}
+      className={cn("h-full", pixel.variable, sans.variable, mono.variable)}
     >
       <body className="min-h-full bg-background font-sans text-foreground">
         <noscript>

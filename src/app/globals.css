@@ -5,45 +5,45 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* CRT RGB: cyan + magenta chrome, gold reserved for the one CTA */
-  --background: #06051a;
-  --foreground: #f7f4ea;
-  --card: #12102a;
-  --card-foreground: #f7f4ea;
-  --popover: #12102a;
-  --popover-foreground: #f7f4ea;
-  --primary: #ffd24a;
-  --primary-foreground: #06051a;
-  --secondary: #16122c;
-  --secondary-foreground: #f7f4ea;
-  --muted: #16122c;
-  --muted-foreground: #a398b8;
-  --accent: #3de8ff;
-  --accent-foreground: #06051a;
-  --destructive: #ff3d8a;
-  --border: #5a4d7a;
-  --input: #5a4d7a;
-  --ring: #3de8ff;
+  /* Game Boy DMG: four greens on a pale LCD. Text tones are darkened where
+     needed to keep 4.5:1 on --background; lime (--pixel-highlight) is decor only. */
+  color-scheme: light;
+  --background: #c4cfa1;
+  --foreground: #0f380f;
+  --card: #b9c698;
+  --card-foreground: #0f380f;
+  --popover: #b9c698;
+  --popover-foreground: #0f380f;
+  --primary: #306230;
+  --primary-foreground: #e3ecc5;
+  --secondary: #b3c08e;
+  --secondary-foreground: #0f380f;
+  --muted: #b3c08e;
+  --muted-foreground: #3a5530;
+  --accent: #8bac0f;
+  --accent-foreground: #0f380f;
+  --destructive: #7a2e12;
+  --border: #306230;
+  --input: #306230;
+  --ring: #285428;
   --radius: 0;
-  --glow: rgba(61, 232, 255, 0.14);
-  --sidebar: #06051a;
-  --sidebar-foreground: #f7f4ea;
-  --sidebar-primary: #ffd24a;
-  --sidebar-primary-foreground: #06051a;
-  --sidebar-accent: #16122c;
-  --sidebar-accent-foreground: #f7f4ea;
-  --sidebar-border: #5a4d7a;
-  --sidebar-ring: #3de8ff;
-  --chart-1: #ffd24a;
-  --chart-2: #3de8ff;
-  --chart-3: #ff3d8a;
-  --chart-4: #5a4d7a;
-  --chart-5: #16122c;
-  --freshman-mark: #ff3d8a;
-  --pixel-gold: #ffd24a;
-  --pixel-cyan: #3de8ff;
-  --pixel-magenta: #ff3d8a;
-  --pixel-ink: #06051a;
+  --sidebar: #c4cfa1;
+  --sidebar-foreground: #0f380f;
+  --sidebar-primary: #306230;
+  --sidebar-primary-foreground: #e3ecc5;
+  --sidebar-accent: #b3c08e;
+  --sidebar-accent-foreground: #0f380f;
+  --sidebar-border: #306230;
+  --sidebar-ring: #285428;
+  --chart-1: #0f380f;
+  --chart-2: #306230;
+  --chart-3: #8bac0f;
+  --chart-4: #9bbc0f;
+  --chart-5: #b3c08e;
+  --pixel-cta: #306230;
+  --pixel-on-cta: #e3ecc5;
+  --pixel-accent: #285428;
+  --pixel-highlight: #8bac0f;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
@@ -67,10 +67,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-freshman-mark: var(--freshman-mark);
-  --color-pixel-gold: var(--pixel-gold);
-  --color-pixel-cyan: var(--pixel-cyan);
-  --color-pixel-magenta: var(--pixel-magenta);
+  --color-pixel-cta: var(--pixel-cta);
+  --color-pixel-on-cta: var(--pixel-on-cta);
+  --color-pixel-accent: var(--pixel-accent);
+  --color-pixel-highlight: var(--pixel-highlight);
   --radius-sm: 0;
   --radius-md: 0;
   --radius-lg: 0;
@@ -98,21 +98,21 @@ body {
   min-height: 100%;
   background-color: var(--background);
   background-image:
-    linear-gradient(rgba(244, 240, 230, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 240, 230, 0.035) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px);
   background-size: 8px 8px;
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 ::selection {
-  background: var(--pixel-cyan);
-  color: var(--pixel-ink);
+  background: var(--pixel-accent);
+  color: var(--pixel-on-cta);
 }
 
 * {
   scrollbar-width: auto;
-  scrollbar-color: var(--pixel-gold) var(--pixel-ink);
+  scrollbar-color: var(--pixel-cta) var(--muted);
 }
 
 *::-webkit-scrollbar {
@@ -120,12 +120,12 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-  background: var(--pixel-ink);
+  background: var(--muted);
 }
 
 *::-webkit-scrollbar-thumb {
   border-radius: 0;
-  background: var(--pixel-gold);
+  background: var(--pixel-cta);
 }
 
 .scroll-progress {
@@ -137,7 +137,7 @@ body {
   height: 4px;
   transform-origin: 0 50%;
   pointer-events: none;
-  background: var(--pixel-gold);
+  background: var(--pixel-cta);
   image-rendering: pixelated;
 }
 
@@ -185,8 +185,8 @@ body {
 
 .pixel-chroma {
   text-shadow:
-    -2px 0 var(--pixel-magenta),
-    2px 0 var(--pixel-cyan);
+    -2px 0 var(--pixel-highlight),
+    2px 0 var(--pixel-accent);
   animation: pixel-chroma 4s linear infinite;
 }
 
@@ -194,14 +194,14 @@ body {
   0%,
   100% {
     text-shadow:
-      -2px 0 var(--pixel-magenta),
-      2px 0 var(--pixel-cyan);
+      -2px 0 var(--pixel-highlight),
+      2px 0 var(--pixel-accent);
   }
 
   50% {
     text-shadow:
-      2px 0 var(--pixel-magenta),
-      -2px 0 var(--pixel-cyan);
+      2px 0 var(--pixel-highlight),
+      -2px 0 var(--pixel-accent);
   }
 }
 
@@ -211,12 +211,12 @@ body {
   line-height: 2;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--pixel-cyan);
+  color: var(--pixel-accent);
   -webkit-font-smoothing: none;
 }
 
 .pixel-kicker-alert {
-  color: var(--freshman-mark);
+  color: var(--foreground);
 }
 
 .pixel-frame {
@@ -258,31 +258,31 @@ body {
 
 @media (hover: hover) and (pointer: fine) {
   .pixel-btn:hover {
-    background: var(--pixel-gold);
-    color: var(--pixel-ink);
-    border-color: var(--pixel-gold);
+    background: var(--pixel-cta);
+    color: var(--pixel-on-cta);
+    border-color: var(--pixel-cta);
   }
 }
 
 .pixel-btn-fill {
-  background: var(--pixel-gold);
-  color: var(--pixel-ink);
-  border-color: var(--pixel-gold);
+  background: var(--pixel-cta);
+  color: var(--pixel-on-cta);
+  border-color: var(--pixel-cta);
 }
 
 .pixel-btn-fill.pixel-caret::after {
-  color: var(--pixel-ink);
+  color: var(--pixel-on-cta);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .pixel-btn-fill:hover {
     background: transparent;
-    color: var(--pixel-gold);
-    border-color: var(--pixel-gold);
+    color: var(--pixel-cta);
+    border-color: var(--pixel-cta);
   }
 
   .pixel-btn-fill:hover.pixel-caret::after {
-    color: var(--pixel-gold);
+    color: var(--pixel-cta);
   }
 }
 
@@ -364,7 +364,7 @@ li:nth-child(3) .pixel-reveal-item {
   display: inline-block;
   width: 0.9em;
   margin-right: 0.25em;
-  color: var(--pixel-cyan);
+  color: var(--pixel-accent);
   opacity: 0;
   transition: opacity 150ms ease;
 }
@@ -419,11 +419,11 @@ li:nth-child(3) .pixel-reveal-item {
 
 @media (hover: hover) and (pointer: fine) {
   .pixel-menu-btn:hover {
-    border-color: var(--pixel-cyan);
+    border-color: var(--pixel-accent);
   }
 
   .pixel-menu-btn:hover span {
-    background: var(--pixel-cyan);
+    background: var(--pixel-accent);
   }
 }
 
@@ -436,8 +436,8 @@ li:nth-child(3) .pixel-reveal-item {
   padding: 5.5rem 1.5rem 2rem;
   background-color: var(--background);
   background-image:
-    linear-gradient(rgba(244, 240, 230, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 240, 230, 0.035) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 7%, transparent) 1px, transparent 1px);
   background-size: 8px 8px;
   transform-origin: calc(100% - 2.5rem) 2.5rem;
   opacity: 0;
@@ -509,7 +509,7 @@ li:nth-child(3) .pixel-reveal-item {
   display: inline-block;
   width: 0.9em;
   margin-right: 0.15em;
-  color: var(--pixel-cyan);
+  color: var(--pixel-accent);
   opacity: 0;
   transition: opacity 150ms ease;
 }
@@ -522,14 +522,14 @@ li:nth-child(3) .pixel-reveal-item {
 
 @media (hover: hover) and (pointer: fine) {
   .pixel-link:hover {
-    color: var(--pixel-cyan);
+    color: var(--pixel-accent);
   }
 }
 
 .pixel-rule {
   height: 4px;
   width: 48px;
-  background: var(--pixel-cyan);
+  background: var(--pixel-accent);
   image-rendering: pixelated;
   transform-origin: 0 50%;
 }
@@ -565,18 +565,18 @@ li:nth-child(3) .pixel-reveal-item {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(1px 1px at 8% 12%, #f7f4ea 50%, transparent 51%),
-    radial-gradient(1px 1px at 22% 38%, #3de8ff 50%, transparent 51%),
-    radial-gradient(1px 1px at 41% 18%, #f7f4ea 50%, transparent 51%),
-    radial-gradient(1px 1px at 63% 28%, #ff3d8a 50%, transparent 51%),
-    radial-gradient(1px 1px at 77% 14%, #f7f4ea 50%, transparent 51%),
-    radial-gradient(1px 1px at 91% 42%, #ffd24a 50%, transparent 51%),
-    radial-gradient(1px 1px at 14% 72%, #3de8ff 50%, transparent 51%),
-    radial-gradient(1px 1px at 34% 88%, #ff3d8a 50%, transparent 51%),
-    radial-gradient(1px 1px at 52% 64%, #f7f4ea 50%, transparent 51%),
-    radial-gradient(1px 1px at 68% 81%, #ffd24a 50%, transparent 51%),
-    radial-gradient(1px 1px at 86% 69%, #3de8ff 50%, transparent 51%),
-    radial-gradient(2px 2px at 48% 8%, #ff3d8a 50%, transparent 51%);
+    radial-gradient(1px 1px at 8% 12%, var(--foreground) 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 38%, var(--pixel-accent) 50%, transparent 51%),
+    radial-gradient(1px 1px at 41% 18%, var(--foreground) 50%, transparent 51%),
+    radial-gradient(1px 1px at 63% 28%, var(--pixel-highlight) 50%, transparent 51%),
+    radial-gradient(1px 1px at 77% 14%, var(--foreground) 50%, transparent 51%),
+    radial-gradient(1px 1px at 91% 42%, var(--pixel-cta) 50%, transparent 51%),
+    radial-gradient(1px 1px at 14% 72%, var(--pixel-accent) 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 88%, var(--pixel-highlight) 50%, transparent 51%),
+    radial-gradient(1px 1px at 52% 64%, var(--foreground) 50%, transparent 51%),
+    radial-gradient(1px 1px at 68% 81%, var(--pixel-cta) 50%, transparent 51%),
+    radial-gradient(1px 1px at 86% 69%, var(--pixel-accent) 50%, transparent 51%),
+    radial-gradient(2px 2px at 48% 8%, var(--pixel-highlight) 50%, transparent 51%);
   background-size: 100% 100%;
   image-rendering: pixelated;
 }
@@ -587,12 +587,12 @@ li:nth-child(3) .pixel-reveal-item {
   background:
     repeating-linear-gradient(
       90deg,
-      rgba(61, 232, 255, 0.08) 0 4px,
+      color-mix(in srgb, var(--pixel-accent) 8%, transparent) 0 4px,
       transparent 4px 8px
     ),
     repeating-linear-gradient(
       0deg,
-      rgba(255, 61, 138, 0.1) 0 4px,
+      color-mix(in srgb, var(--pixel-highlight) 18%, transparent) 0 4px,
       transparent 4px 8px
     );
   mask-image: radial-gradient(ellipse 75% 55% at 50% 42%, #000 20%, transparent 72%);
@@ -605,7 +605,7 @@ li:nth-child(3) .pixel-reveal-item {
   background: repeating-linear-gradient(
     0deg,
     transparent 0 2px,
-    rgba(10, 8, 20, 0.28) 2px 4px
+    color-mix(in srgb, var(--foreground) 6%, transparent) 2px 4px
   );
   pointer-events: none;
   animation: pixel-scan 8s linear infinite;
@@ -627,7 +627,7 @@ li:nth-child(3) .pixel-reveal-item {
   background: radial-gradient(
     ellipse 90% 75% at 50% 45%,
     transparent 35%,
-    rgba(6, 5, 26, 0.82) 100%
+    color-mix(in srgb, var(--pixel-accent) 22%, transparent) 100%
   );
 }
 
@@ -640,11 +640,226 @@ li:nth-child(3) .pixel-reveal-item {
 .pixel-caret::after {
   content: "_";
   margin-left: 4px;
-  color: var(--pixel-ink);
+  color: var(--pixel-on-cta);
   animation: pixel-blink 1.05s step-end infinite;
 }
 
+/* Hero name: second word in VT323, contrasting the bold Pixelify first word */
+.hero-name-alt {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pixel-accent);
+}
+
+.hero-name-alt::after {
+  content: "_";
+  color: var(--pixel-cta);
+  animation: pixel-blink 1.05s step-end infinite;
+}
+
+/* CRT boot intro — plays once per session, then powers off like a tube */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  pointer-events: none;
+  background-color: var(--background);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 2px,
+    color-mix(in srgb, var(--foreground) 8%, transparent) 2px 4px
+  );
+  transform-origin: 50% 50%;
+  animation: boot-off 1300ms linear forwards;
+}
+
+.boot[data-skip] {
+  display: none;
+}
+
+.boot__screen {
+  width: min(100%, 34rem);
+  text-align: center;
+}
+
+/* 16 fixed blocks light up one per step; the % counter ticks on the same beat */
+.boot__bar {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 3px;
+  height: 22px;
+  border: 2px solid var(--foreground);
+  padding: 3px;
+}
+
+.boot__bar > span {
+  background: var(--pixel-cta);
+  opacity: 0;
+  animation: boot-block 0s calc(100ms + (var(--i) + 1) * 53ms) forwards;
+}
+
+@keyframes boot-block {
+  to {
+    opacity: 1;
+  }
+}
+
+@property --boot-pct {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.boot__pct {
+  min-width: 4ch;
+  text-align: right;
+  counter-reset: boot-pct var(--boot-pct);
+  animation: boot-pct 850ms steps(16, end) 100ms forwards;
+}
+
+.boot__pct::after {
+  content: counter(boot-pct) "%";
+}
+
+@keyframes boot-pct {
+  to {
+    --boot-pct: 100;
+  }
+}
+
+@keyframes boot-off {
+  0%,
+  76% {
+    opacity: 1;
+    transform: scale(1, 1);
+    filter: brightness(1);
+  }
+
+  88% {
+    opacity: 1;
+    transform: scale(1, 0.006);
+    filter: brightness(3);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0, 0.006);
+    visibility: hidden;
+  }
+}
+
+/* While the boot plays, hold the hero entrance until the tube powers off */
+body:has(#boot:not([data-skip])) .pixel-enter {
+  animation-delay: 1150ms;
+}
+
+body:has(#boot:not([data-skip])) .pixel-enter-d1 {
+  animation-delay: 1200ms;
+}
+
+body:has(#boot:not([data-skip])) .pixel-enter-d2 {
+  animation-delay: 1250ms;
+}
+
+body:has(#boot:not([data-skip])) .pixel-chroma.pixel-enter-d1 {
+  animation-delay: 1200ms, 1400ms;
+}
+
+body:has(#boot:not([data-skip])) .hero-cta {
+  animation-delay: 1310ms;
+}
+
+/* Projects: indexed grid cells */
+.project-art {
+  background-color: var(--card);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--foreground) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 9%, transparent) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.project-art > * {
+  transition: transform 200ms var(--ease-out);
+}
+
+.project-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.project-link:focus-visible {
+  outline: none;
+}
+
+.project-link:focus-visible::after {
+  outline: 2px solid var(--pixel-accent);
+  outline-offset: -6px;
+}
+
+.project-arrow {
+  transition: transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-cell:hover .project-art > * {
+    transform: scale(1.04);
+  }
+
+  .project-cell:hover .project-arrow {
+    transform: translate(3px, -3px);
+  }
+}
+
+/* Contact: hatched panel with the e-mail as headline */
+.contact-hatch {
+  background-color: var(--background);
+  background-image: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--foreground) 8%, transparent) 0 1px,
+    transparent 1px 8px
+  );
+}
+
+.contact-email {
+  font-size: clamp(1.9rem, 8vw, 6rem);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-email:hover {
+    color: var(--foreground);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .boot {
+    display: none;
+  }
+
+  .hero-name-alt::after {
+    animation: none;
+  }
+
+  .project-art > *,
+  .project-arrow {
+    transition: none;
+  }
+
+  .project-cell:hover .project-art > *,
+  .project-cell:hover .project-arrow {
+    transform: none;
+  }
+
   .pixel-caret::after,
   .hero-ambient__scan,
   .scroll-progress,
