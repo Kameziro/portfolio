@@ -7,10 +7,11 @@ import struct
 import zlib
 from pathlib import Path
 
-INK = (6, 5, 26, 255)
-CYAN = (61, 232, 255, 255)
-MAGENTA = (255, 61, 138, 255)
-CREAM = (247, 244, 234, 255)
+# Game Boy DMG palette; keep in sync with the :root tokens in src/app/globals.css.
+SCREEN = (196, 207, 161, 255)  # --background
+FRAME = (48, 98, 48, 255)  # --pixel-cta
+SHADOW = (139, 172, 15, 255)  # --pixel-highlight
+GLYPH = (15, 56, 15, 255)  # --foreground
 
 CELL = 2
 GRID = 16
@@ -31,13 +32,13 @@ CHROMA = -1
 
 
 def paint_grid() -> list[list[tuple[int, int, int, int]]]:
-    grid = [[INK for _ in range(GRID)] for _ in range(GRID)]
+    grid = [[SCREEN for _ in range(GRID)] for _ in range(GRID)]
 
     for i in range(GRID):
-        grid[0][i] = CYAN
-        grid[GRID - 1][i] = CYAN
-        grid[i][0] = CYAN
-        grid[i][GRID - 1] = CYAN
+        grid[0][i] = FRAME
+        grid[GRID - 1][i] = FRAME
+        grid[i][0] = FRAME
+        grid[i][GRID - 1] = FRAME
 
     def stamp(dx: int, color: tuple[int, int, int, int]) -> None:
         for row, line in enumerate(C_GLYPH):
@@ -49,8 +50,8 @@ def paint_grid() -> list[list[tuple[int, int, int, int]]]:
                 if 1 <= x < GRID - 1 and 1 <= y < GRID - 1:
                     grid[y][x] = color
 
-    stamp(CHROMA, MAGENTA)
-    stamp(0, CREAM)
+    stamp(CHROMA, SHADOW)
+    stamp(0, GLYPH)
     return grid
 
 
@@ -101,7 +102,7 @@ def write_svg(path: Path, grid: list[list[tuple[int, int, int, int]]]) -> None:
         x = 0
         while x < GRID:
             color = row[x]
-            if color == INK:
+            if color == SCREEN:
                 x += 1
                 continue
             run = 1
@@ -116,7 +117,7 @@ def write_svg(path: Path, grid: list[list[tuple[int, int, int, int]]]) -> None:
         [
             '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">',
             "  <title>Cleber Neto</title>",
-            f'  <rect width="{SIZE}" height="{SIZE}" fill="{hex_color(INK)}"/>',
+            f'  <rect width="{SIZE}" height="{SIZE}" fill="{hex_color(SCREEN)}"/>',
             *rects,
             "</svg>",
             "",
