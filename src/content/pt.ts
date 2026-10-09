@@ -50,7 +50,7 @@ export const pt = {
         summary:
           "Sistema web para o Governo do Mato Grosso do Sul, conectando cidadãos a oportunidades no mercado de trabalho.",
         stack: "Next.js · Node.js · Java · Quarkus · SQL Server",
-        logo: "/projects/msqualifica.svg",
+        logo: "/projects/msqualifica.png",
         logoAlt: "Logo MS Qualifica Digital",
         href: "https://www.msqualifica.ms.gov.br/",
       },
