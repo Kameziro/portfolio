@@ -32,7 +32,7 @@ function ProjectArt({
       src={src}
       alt={alt}
       fill
-      sizes="(max-width: 768px) 92vw, 44vw"
+      sizes="(max-width: 1024px) 92vw, 33vw"
       className={className}
       priority={priority}
     />
@@ -66,7 +66,7 @@ export function Projects({ copy }: Props) {
         </p>
       </div>
 
-      <ul className="mt-12 grid list-none grid-cols-1 divide-y-2 divide-foreground border-2 border-foreground p-0 md:grid-cols-2 md:divide-x-2 md:divide-y-0">
+      <ul className="mt-12 grid list-none grid-cols-1 divide-y-2 divide-foreground border-2 border-foreground p-0 lg:grid-cols-3 lg:divide-x-2 lg:divide-y-0">
         {copy.projects.items.map((project, index) => {
           const href = "href" in project ? project.href : undefined;
           const number = String(index + 1).padStart(2, "0");

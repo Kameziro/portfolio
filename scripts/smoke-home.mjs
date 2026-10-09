@@ -17,6 +17,7 @@ async function main() {
     "Cleber Alves de Oliveira Neto",
     "AOR",
     "MSQualifica",
+    "Lums",
     "Sobre",
     "Projetos",
     "Experiência",
