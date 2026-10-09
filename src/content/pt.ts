@@ -65,7 +65,7 @@ export const pt = {
         href: "https://www.msqualifica.ms.gov.br/",
       },
       {
-        name: "Lums",
+        name: "Ama Energy",
         line: "SaaS multi-tenant",
         summary:
           "SaaS que automatiza o ciclo comercial de empresas de energia solar por assinatura, do lead à cobrança, com um robô que baixa as faturas da distribuidora e extrai os dados com IA. Desenvolvimento fullstack.",
@@ -73,6 +73,7 @@ export const pt = {
         logo: "/projects/lums.png",
         logoAlt: "Logo AMA Energy",
         artBg: "#a358b5",
+        href: "https://amaenergy.com.br/ama-energy",
       },
     ],
   },
