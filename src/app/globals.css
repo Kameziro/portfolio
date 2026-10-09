@@ -270,19 +270,11 @@ body {
   border-color: var(--pixel-cta);
 }
 
-.pixel-btn-fill.pixel-caret::after {
-  color: var(--pixel-on-cta);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .pixel-btn-fill:hover {
     background: transparent;
     color: var(--pixel-cta);
     border-color: var(--pixel-cta);
-  }
-
-  .pixel-btn-fill:hover.pixel-caret::after {
-    color: var(--pixel-cta);
   }
 }
 
@@ -310,18 +302,7 @@ body {
   animation-delay: 100ms;
 }
 
-.pixel-chroma.pixel-enter {
-  animation:
-    pixel-enter 200ms var(--ease-out) backwards,
-    pixel-chroma 4s linear infinite;
-}
-
-.pixel-chroma.pixel-enter-d1 {
-  animation-delay: 50ms, 250ms;
-}
-
 .hero-cta {
-  margin-top: 3rem;
   animation: pixel-enter 200ms var(--ease-out) 160ms backwards;
 }
 
@@ -543,121 +524,106 @@ li:nth-child(3) .pixel-reveal-item {
   transform: scaleX(1);
 }
 
-.noise-overlay::after {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  opacity: 0.12;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  image-rendering: pixelated;
-  mix-blend-mode: overlay;
-}
-
-.hero-ambient {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: var(--background);
-}
-
-.hero-ambient__stars {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 8% 12%, var(--foreground) 50%, transparent 51%),
-    radial-gradient(1px 1px at 22% 38%, var(--pixel-accent) 50%, transparent 51%),
-    radial-gradient(1px 1px at 41% 18%, var(--foreground) 50%, transparent 51%),
-    radial-gradient(1px 1px at 63% 28%, var(--pixel-highlight) 50%, transparent 51%),
-    radial-gradient(1px 1px at 77% 14%, var(--foreground) 50%, transparent 51%),
-    radial-gradient(1px 1px at 91% 42%, var(--pixel-cta) 50%, transparent 51%),
-    radial-gradient(1px 1px at 14% 72%, var(--pixel-accent) 50%, transparent 51%),
-    radial-gradient(1px 1px at 34% 88%, var(--pixel-highlight) 50%, transparent 51%),
-    radial-gradient(1px 1px at 52% 64%, var(--foreground) 50%, transparent 51%),
-    radial-gradient(1px 1px at 68% 81%, var(--pixel-cta) 50%, transparent 51%),
-    radial-gradient(1px 1px at 86% 69%, var(--pixel-accent) 50%, transparent 51%),
-    radial-gradient(2px 2px at 48% 8%, var(--pixel-highlight) 50%, transparent 51%);
-  background-size: 100% 100%;
-  image-rendering: pixelated;
-}
-
-.hero-ambient__dither {
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--pixel-accent) 8%, transparent) 0 4px,
-      transparent 4px 8px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      color-mix(in srgb, var(--pixel-highlight) 18%, transparent) 0 4px,
-      transparent 4px 8px
-    );
-  mask-image: radial-gradient(ellipse 75% 55% at 50% 42%, #000 20%, transparent 72%);
-  image-rendering: pixelated;
-}
-
-.hero-ambient__scan {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0 2px,
-    color-mix(in srgb, var(--foreground) 6%, transparent) 2px 4px
-  );
-  pointer-events: none;
-  animation: pixel-scan 8s linear infinite;
-}
-
-@keyframes pixel-scan {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(4px);
-  }
-}
-
-.hero-ambient__vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 90% 75% at 50% 45%,
-    transparent 35%,
-    color-mix(in srgb, var(--pixel-accent) 22%, transparent) 100%
-  );
-}
-
 @keyframes pixel-blink {
   50% {
     opacity: 0;
   }
 }
 
-.pixel-caret::after {
-  content: "_";
-  margin-left: 4px;
-  color: var(--pixel-on-cta);
+/* Hero: the name as a Game Boy LCD. Ghost cells show the unlit grid, like
+   the DMG screen does; the canvas repaints the same matrix interactively. */
+.hero-matrix {
+  position: relative;
+  display: block;
+  width: min(100%, calc((100svh - 18rem) * var(--cols) / var(--rows)));
+  min-width: min(100%, 18rem);
+}
+
+.hero-matrix__fallback,
+.hero-matrix__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-matrix__fallback pattern rect,
+.hero-matrix__ink,
+.hero-matrix__cursor {
+  fill: var(--foreground);
+}
+
+.hero-matrix__alt,
+.hero-matrix__cursor {
+  fill: var(--pixel-accent);
+}
+
+.hero-matrix__ghost {
+  opacity: 0.07;
+}
+
+.hero-matrix__cursor {
   animation: pixel-blink 1.05s step-end infinite;
 }
 
-/* Hero name: second word in VT323, contrasting the bold Pixelify first word */
-.hero-name-alt {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-weight: 400;
-  line-height: 0.8;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.hero-matrix[data-ready] .hero-matrix__fallback {
+  visibility: hidden;
+}
+
+.hero-hint::before {
+  content: "\25B8\00A0";
   color: var(--pixel-accent);
 }
 
-.hero-name-alt::after {
-  content: "_";
+.hero-hint__coarse {
+  display: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-hint__fine {
+    display: none;
+  }
+
+  .hero-hint__coarse {
+    display: inline;
+  }
+}
+
+.hero-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Pixel play triangle, drawn with currentColor so it flips on hover */
+.hero-start__play {
+  width: 6px;
+  height: 10px;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.hero-start__key {
+  border: 2px solid currentColor;
+  padding: 0 0.35rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1rem;
+  line-height: 1.1rem;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.8;
+}
+
+.hero-start[data-pressed] {
+  transform: translate(2px, 2px);
+  background: transparent;
   color: var(--pixel-cta);
-  animation: pixel-blink 1.05s step-end infinite;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-start__key {
+    display: none;
+  }
 }
 
 /* CRT boot intro — plays once per session, then powers off like a tube */
@@ -768,10 +734,6 @@ body:has(#boot:not([data-skip])) .pixel-enter-d2 {
   animation-delay: 1250ms;
 }
 
-body:has(#boot:not([data-skip])) .pixel-chroma.pixel-enter-d1 {
-  animation-delay: 1200ms, 1400ms;
-}
-
 body:has(#boot:not([data-skip])) .hero-cta {
   animation-delay: 1310ms;
 }
@@ -851,10 +813,6 @@ body:has(#boot:not([data-skip])) .hero-cta {
     display: none;
   }
 
-  .hero-name-alt::after {
-    animation: none;
-  }
-
   .project-art > *,
   .project-arrow {
     transition: none;
@@ -865,8 +823,6 @@ body:has(#boot:not([data-skip])) .hero-cta {
     transform: none;
   }
 
-  .pixel-caret::after,
-  .hero-ambient__scan,
   .scroll-progress,
   .pixel-chroma {
     animation: none;

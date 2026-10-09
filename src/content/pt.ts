@@ -16,6 +16,14 @@ export const pt = {
     role: "Engenheiro de Software Júnior · Full Stack Mobile e Web",
     lead: "Produtos mobile e web que funcionam de verdade — offline, em campo e em escala governamental.",
     cta: "Ver projetos",
+    ctaKey: "Enter",
+    hint: "Passe o cursor sobre os pixels",
+    hintTouch: "Toque e arraste sobre os pixels",
+    facts: [
+      { label: "Stack", value: "React Native · Java · Swift · Next.js" },
+      { label: "Foco", value: "Offline-first, mobile e web" },
+      { label: "Idiomas", value: "Português nativo · Inglês avançado" },
+    ],
     boot: {
       label: "Portfólio",
       build: "build 2026.10 · pt-BR",

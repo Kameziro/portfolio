@@ -11,6 +11,24 @@ Curadoria feita em 2026-10-05 na branch `experiment/mobbin-references`, organiza
 | [Freshman — Danik Bartolini](https://mobbin.com/sites/sections/cc46fe95-d2fb-46a6-927a-96c9bc6d5ecc) | Nome em duas famílias tipográficas contrastantes (sans pesada + serif condensada). Ideia: "CLEBER" em pixel e "NETO" em mono. |
 | [GitHub ReadME Project](https://mobbin.com/sites/sections/10928b8e-852d-4424-b248-8028e8ff92d5) | Byline mono (`NOME // @handle`) acima do texto e coluna lateral com metadados (local, link). |
 
+## Hero v2 — matriz LCD interativa
+
+Curadoria de 2026-10-09 (branch `feat/hero-led-matrix`). Ideia central: o nome não é texto com efeito, é um **painel LCD de Game Boy**. Cada pixel do nome é uma célula que o Visitante empurra com o cursor ou o dedo, e um clique solta uma onda. As células apagadas aparecem fracas, como a grade do LCD do DMG.
+
+| Referência | O que aproveitar |
+| --- | --- |
+| [Wild](https://mobbin.com/sites/sections/b7197fb0-f4c9-4583-8864-d0f5e1c94195) | Letreiro gigante feito de quadrados soltos. Aqui virou o nome desenhado célula por célula. |
+| [Base — Just build it](https://mobbin.com/sites/sections/87e73f15-c33e-4182-977e-41c71a0f2d3a) | Título em dot-matrix sobre um campo de pontos. Origem da grade "fantasma" de células apagadas. |
+| [Replit](https://mobbin.com/sites/sections/0785619c-7c3c-4a9c-96bf-e1bd3112968d) | Grade de elementos que reage à posição do cursor. Origem da física de repulsão. |
+| [Maze](https://mobbin.com/sites/sections/d99d72ef-114d-4712-b883-f4506d57fe05) | Campo de quadrados vivos como hero inteiro. Mostra que a peça pode ser o próprio visual, sem foto. |
+| [MANA Yerba Maté](https://mobbin.com/sites/sections/1bdcc550-68a0-4c2b-b010-473839dbf7bc) | "Press Space to jump": o hero como tela de jogo. Virou o CTA "Ver projetos" que também responde ao Enter. |
+| [GitHub ReadME Project](https://mobbin.com/sites/sections/10928b8e-852d-4424-b248-8028e8ff92d5) | Coluna de fatos ao lado do texto. Virou a lista Stack / Foco / Idiomas. |
+
+Alternativas que ficaram de fora (ainda servem para iterações futuras):
+
+- [Museum of the Human Web](https://mobbin.com/sites/sections/62a1a23c-bccc-4411-b9e7-712975ae4494) e [Parker AI](https://mobbin.com/sites/sections/8df76ac8-aff2-47cf-b3d3-b13081d23914): o hero dentro de um aparelho (aqui seria um Game Boy em CSS). É skeumórfico e pesado no mobile.
+- [Threads](https://mobbin.com/sites/sections/83216193-a896-4546-bbec-161d1d1844c3) e [Lightdash](https://mobbin.com/sites/sections/94e68245-62cd-44e2-b7b9-c956cb47c511): sprites em pixel. Um avatar 16×16 do Cleber poderia andar pelo rodapé do hero.
+
 ## Projetos
 
 | Referência | O que aproveitar |
