@@ -785,6 +785,11 @@ body:has(#boot:not([data-skip])) .hero-cta {
   background-size: 8px 8px;
 }
 
+/* Logos with a solid backdrop paint the whole cell in that color instead. */
+.project-art[data-bleed] {
+  background-image: none;
+}
+
 .project-art > * {
   transition: transform 200ms var(--ease-out);
 }

@@ -8,12 +8,15 @@ function ProjectArt({
   src,
   alt,
   priority,
+  bleed,
 }: {
   src: string;
   alt: string;
   priority?: boolean;
+  /** Logo sits edge-to-edge on a cell painted in its own background color. */
+  bleed?: boolean;
 }) {
-  const className = "object-contain p-10 md:p-14";
+  const className = bleed ? "object-contain" : "object-contain p-10 md:p-14";
   if (src.endsWith(".svg")) {
     return (
       <img
@@ -76,11 +79,16 @@ export function Projects({ copy }: Props) {
                   <span className="text-muted-foreground">{project.line}</span>
                 </div>
 
-                <div className="project-art relative aspect-[16/10] w-full overflow-hidden">
+                <div
+                  className="project-art relative aspect-[16/10] w-full overflow-hidden"
+                  data-bleed={project.artBg ? "" : undefined}
+                  style={project.artBg ? { backgroundColor: project.artBg } : undefined}
+                >
                   <ProjectArt
                     src={project.logo}
                     alt={href ? "" : project.logoAlt}
                     priority={index === 0}
+                    bleed={Boolean(project.artBg)}
                   />
                 </div>
 
