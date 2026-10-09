@@ -45,25 +45,17 @@ export function Projects({ copy }: Props) {
       aria-labelledby="projetos-title"
       className="mx-auto max-w-6xl px-6 py-28 md:px-10 md:py-36"
     >
-      <div
-        id="projetos"
-        className="pixel-anchor pixel-reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
-      >
-        <div>
-          <span className="pixel-rule mb-8 block" aria-hidden />
-          <p className="pixel-kicker pixel-kicker-alert">
-            LV. {String(copy.projects.items.length).padStart(2, "0")}
-          </p>
-          <h2
-            id="projetos-title"
-            className="pixel-title mt-3 text-3xl text-foreground md:text-5xl"
-          >
-            {copy.projects.title}
-          </h2>
-        </div>
-        <p className="font-mono text-xl text-muted-foreground md:max-w-xs md:text-right">
-          {copy.projects.caption}
+      <div id="projetos" className="pixel-anchor pixel-reveal">
+        <span className="pixel-rule mb-8 block" aria-hidden />
+        <p className="pixel-kicker pixel-kicker-alert">
+          LV. {String(copy.projects.items.length).padStart(2, "0")}
         </p>
+        <h2
+          id="projetos-title"
+          className="pixel-title mt-3 text-3xl text-foreground md:text-5xl"
+        >
+          {copy.projects.title}
+        </h2>
       </div>
 
       <ul className="mt-12 grid list-none grid-cols-1 divide-y-2 divide-foreground border-2 border-foreground p-0 lg:grid-cols-3 lg:divide-x-2 lg:divide-y-0">
