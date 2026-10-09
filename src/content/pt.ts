@@ -40,7 +40,6 @@ export const pt = {
   },
   projects: {
     title: "Projetos",
-    caption: "Trabalho real — em campo e em produção.",
     privateLabel: "Sem link público",
     items: [
       {
