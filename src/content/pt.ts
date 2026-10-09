@@ -43,6 +43,7 @@ export const pt = {
         stack: "React Native · JavaScript · Offline-first",
         logo: "/projects/aor.png",
         logoAlt: "Logo AOR",
+        artBg: "#013bd0",
       },
       {
         name: "MSQualifica",
@@ -52,6 +53,7 @@ export const pt = {
         stack: "Next.js · Node.js · Java · Quarkus · SQL Server",
         logo: "/projects/msqualifica.png",
         logoAlt: "Logo MS Qualifica Digital",
+        artBg: "#059442",
         href: "https://www.msqualifica.ms.gov.br/",
       },
     ],
